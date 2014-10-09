@@ -729,7 +729,8 @@ else{
 		    if (code == 37 && (getPos(obj1) == 0))
 		    {
 		        obj0.focus();
-		        setCursor(obj0,obj0.value.length);
+		        setCursor(obj0,obj0.value.length);ilzsy
+		        
 		    }
 		    if (code == 39 && (getPos(obj1) == obj1.value.length))
 		    {
