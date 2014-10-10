@@ -146,6 +146,11 @@
 			</result>
 		</action>
 		<!-- 工程end -->
-
+		
+		<!-- 这个是wpr后来加的 -->
+		<action name="rateLimitation_*" class="cn.edu.xjtu.manage.action.RateLimitation" method="{1}">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
 	</package>
 </struts>

@@ -1,4 +1,8 @@
 <%@ page language="java" import="java.util.*,cn.edu.xjtu.manage.business.*" pageEncoding="UTF-8"%>
+
+<!-- 暂时先加到这里了 -->
+<script type="text/javascript" src="js/ratelimitation.js"></script>
+
 <div class="accordion" id="accordion-684299">
 	<div class="accordion-group">
 		<div class="accordion-heading">
@@ -16,18 +20,21 @@
 		</div>
 		<div id="accordion-element-681579" class="accordion-body collapse">
 			<div class="span4 accordion-inner todo mrm" style="border:2px solid;border-radius:25px;padding:10px;">
-				<div>
-					<label for="upload_rate">上传速率限制（kpbs）</label><input type="text" id="upload_rate"/>
-				</div>
-				<div>
-					<label for="download_rate">下载速率限制（kpbs）</label><input type="text" id="download_rate" class="span3">
-				</div>
+				<form id="rateLimitationForm" action="rateLimitation.action" method="post"> 
+					<div>
+						<label for="upload_rate">上传速率限制（kpbs）</label><input name=uploadRate type="text" id="uploadRate" />
+					</div>
+					<div>
+						<label for="download_rate">下载速率限制（kpbs）</label><input type="text" name=downloadRate id=downloadRate class="span3">
+					</div>
+					<button type="submit" style="display:none"></button>
+				</form>
 				<div>
 				<div class="span3" style="width:200px;margin-top:10px;margin-left:5px;">
-          			<a href="#" class="btn btn-large btn-block btn-primary">启动速率限制</a>
+          			<a onclick="rateLimitationSubmit()" class="btn btn-large btn-block btn-primary">启动速率限制</a>
         		</div>	
         		<div class="span3" style="width:200px;margin-top:10px;margin-left:5px;">
-          			<a href="#" class="btn btn-large btn-block btn-danger">停止速率限制</a>
+          			<a onclick="rateLimitationStop()" class="btn btn-large btn-block btn-danger">停止速率限制</a>
         		</div>	
         		</div>		
 			</div>
