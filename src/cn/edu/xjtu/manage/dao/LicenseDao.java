@@ -22,7 +22,6 @@ import cn.edu.xjtu.manage.business.License;
 public class LicenseDao {
 	
 	public int updateLicense(int id, String license,Date expires,int isvalid) {
-		// TODO Auto-generated method stub
 		if(id<1){
 			Query q = session.createSQLQuery("insert into t_license(license,expires,isvalid) values (?,?,?)");
 			q.setParameter(0, license);
