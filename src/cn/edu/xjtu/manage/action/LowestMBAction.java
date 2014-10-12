@@ -3,6 +3,8 @@ package cn.edu.xjtu.manage.action;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.edu.xjtu.manage.business.LowestMBService;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -35,15 +37,17 @@ public class LowestMBAction extends ActionSupport {
 	
 	public String execute() {
 		System.out.println("---"+lowestMB);
-		try {
-			//Runtime.getRuntime().exec("/botwall/script/auto_upload "+ lowestMB +" );
+		try{
+			int lowest = Integer.parseInt(lowestMB);
+			LowestMBService.getInstance(lowest);
 			result="success";
 			msg="配置成功";
-		} catch (Exception e) {
+		}catch(Exception e){
 			e.printStackTrace();
 			result="failure";
-			msg="配置失败";
+			msg="参数失败";
 		}
+
 		return "SUCCESS";
 	}
 	
