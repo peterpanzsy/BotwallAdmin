@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class SessionLimit extends ActionSupport {
+public class SessionLimitAction extends ActionSupport {
 	
 	String sessionNum;
 	String result;

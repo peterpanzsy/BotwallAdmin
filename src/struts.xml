@@ -148,27 +148,27 @@
 		<!-- 工程end -->
 		
 		<!-- 这个是wpr后来加的 -->
-		<action name="rateLimitation_*" class="cn.edu.xjtu.manage.action.RateLimitation" method="{1}">
+		<action name="rateLimitation_*" class="cn.edu.xjtu.manage.action.RateLimitationAction" method="{1}">
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
-		<action name="sessionLimit_*" class="cn.edu.xjtu.manage.action.SessionLimit" method="{1}">
+		<action name="sessionLimit_*" class="cn.edu.xjtu.manage.action.SessionLimitAction" method="{1}">
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
-		<action name="lowestMB" class="cn.edu.xjtu.manage.action.LowestMB" >
+		<action name="lowestMB" class="cn.edu.xjtu.manage.action.LowestMBAction" >
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
-		<action name="bridge_*" class="cn.edu.xjtu.manage.action.BridgeSet" method="{1}">
+		<action name="bridge_*" class="cn.edu.xjtu.manage.action.BridgeSetAction" method="{1}">
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
-		<action name="detectionBehavior_*" class="cn.edu.xjtu.manage.action.DetectionBehavior" method="{1}">
+		<action name="detectionBehavior_*" class="cn.edu.xjtu.manage.action.DetectionBehaviorAction" method="{1}">
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
-		<action name="pacp_capture_*" class="cn.edu.xjtu.manage.action.Pacp_capture" method="{1}">
+		<action name="pacp_capture_*" class="cn.edu.xjtu.manage.action.Pacp_captureAction" method="{1}">
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>

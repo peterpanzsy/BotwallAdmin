@@ -3,7 +3,7 @@ package cn.edu.xjtu.manage.action;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class RateLimitation extends ActionSupport {
+public class RateLimitationAction extends ActionSupport {
 	
 	String uploadRate;
 	String downloadRate;

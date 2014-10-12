@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class DetectionBehavior extends ActionSupport {
+public class DetectionBehaviorAction extends ActionSupport {
 	
 	String msg;
 	

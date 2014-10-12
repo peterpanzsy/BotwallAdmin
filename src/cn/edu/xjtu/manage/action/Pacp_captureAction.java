@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class Pacp_capture extends ActionSupport {
+public class Pacp_captureAction extends ActionSupport {
 	//用于返回信息
 	String msg;
 	String result;
