@@ -99,7 +99,7 @@ public class SessionLimitAction extends ActionSupport {
 	}
 
 	private boolean check(String sessionNum){
-		Pattern pattern = Pattern.compile("[1-5]");
+		Pattern pattern = Pattern.compile("^\\d+$");
 		Matcher matcher = pattern.matcher(sessionNum);
 		if(matcher.matches()==false)
         {

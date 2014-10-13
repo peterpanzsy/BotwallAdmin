@@ -11,8 +11,13 @@
 		</div>
 		<div id="accordion-element-341857" class="accordion-body in collapse">
 			<div class="accordion-inner">
-				功能块...
+				<label for="honeyEmail">管理员邮箱</label><input type="text" name=honeyPotEmail id=honeyPotEmail value="${globalEmail}" class="span3"><br/>
+				<label for="honeyTime">每隔XX分钟调用</label><input type="text" name=honeyPotTime id=honeyPotTime value="${globalHoneyTime}" class="span3"><br/>
 			</div>
+			<div class="span3" style="width:200px;margin-top:10px;margin-left:5px;">
+          			<a onclick="honeyPot()" class="btn btn-large btn-block btn-danger">开启蜜网监控</a>
+          			<a onclick="honeyPotTimeChange()" class="btn btn-large btn-block btn-danger">修改间隔时间</a>
+       		</div>
 		</div>
 	</div>
 	<div class="accordion-group">

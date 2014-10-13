@@ -15,6 +15,8 @@ public class BotWallInitListener implements ServletContextListener {
 		application.setAttribute("TCPNum","还木有限制");
 		application.setAttribute("ICMPRateNum","还木有限制");
 		application.setAttribute("TCPRateNum","还木有限制");
+		application.setAttribute("globalEmail","还木有");
+		application.setAttribute("globalHoneyTime","30");
 	}
 	public void contextDestroyed(ServletContextEvent arg0) {
 		

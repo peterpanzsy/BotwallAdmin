@@ -172,5 +172,9 @@
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
+		<action name="honeyFunction_*" class="cn.edu.xjtu.manage.action.HoneyFunctionAction" method="{1}">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
 	</package>
 </struts>
