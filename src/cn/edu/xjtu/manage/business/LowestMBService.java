@@ -1,5 +1,6 @@
 package cn.edu.xjtu.manage.business;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,15 +33,22 @@ public class LowestMBService {
 			tim.cancel();
 		}
 		tim = new Timer();
+		//TODO 这个地方的异常处理不太好，用map可以改进
 		TimerTask tTask = new TimerTask(){
 			@Override
 			public void run() {
 				System.out.println("aaa");
-				//Runtime.getRuntime().exec("/botwall/script/auto_upload "+ lowestMB +" );
+				/*try {
+					Runtime.getRuntime().exec("./botwall/script/auto_upload "+ lowestMB);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}*/
 			}
 		};
-		tim.scheduleAtFixedRate(tTask,0,lowestMB*1000);
+		//暂时设置的是每隔一分钟调用一次
+		tim.scheduleAtFixedRate(tTask,0,60*1000);
 	}
+	
 }
 
 

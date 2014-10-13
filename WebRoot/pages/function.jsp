@@ -1,8 +1,9 @@
 <%@ page language="java" import="java.util.*,cn.edu.xjtu.manage.business.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
 
 <!-- 暂时先加到这里了 -->
 <script type="text/javascript" src="js/ratelimitation.js"></script>
-
+<s:debug/>
 <div class="accordion" id="accordion-684299">
 	<div class="accordion-group">
 		<div class="accordion-heading">
@@ -22,10 +23,10 @@
 			<div class="span4 accordion-inner todo mrm" style="border:2px solid;border-radius:25px;padding:10px;">
 				<form id="rateLimitationForm" action="rateLimitation.action" method="post"> 
 					<div>
-						<label for="upload_rate">上传速率限制（kpbs）</label><input name=uploadRate type="text" id="uploadRate" />
+						<label for="upload_rate">上传速率限制（kpbs）</label><input name=uploadRate type="text" id="uploadRate" value="${globalUploadRate}"/>
 					</div>
 					<div>
-						<label for="download_rate">下载速率限制（kpbs）</label><input type="text" name=downloadRate id=downloadRate class="span3">
+						<label for="download_rate">下载速率限制（kpbs）</label><input type="text" name=downloadRate id="downloadRate" value="${globalDownloadRate}" class="span3">
 					</div>
 				</form>
 				<div>
@@ -46,15 +47,20 @@
 		<div id="accordion-element-3" class="accordion-body collapse">
 			<div class="span4 accordion-inner todo mrm" style="border:2px solid;border-radius:25px;padding:10px;">
 				<div>
-					<label for="session_num">会话个数  &nbsp;</label><input type="text" id="session_num"/>
+					<label for="session_num">IP会话数  &nbsp;</label><input type="text" id="IPNum" value="${IPNum}"/><br/>
+					<label for="session_num">TCP会话数  &nbsp;</label><input type="text" id="TCPNum" value="${TCPNum}"/><br/>
+					<label for="session_num">ICMP发包速率(个/s)  &nbsp;</label><input type="text" id="ICMPRateNum" value="${ICMPRateNum}"/><br/>
+					<label for="session_num">TCP发包速率(个/s)  &nbsp;</label><input type="text" id="TCPRateNum" value="${TCPRateNum}"/>
 				</div>
 				<div>
 				<div class="span3" style="width:300px;margin-top:10px;margin-left:5px;">
-          			<a onclick="session(this.id)" id="session_start1" class="btn btn-large btn-block btn-primary">启动限制会话数，使用默认网口eth1</a>
+          			<a onclick="session(this.id)" id="session_start1" class="btn btn-large btn-block btn-primary">启动限制会话数，使用默认网口eth0</a>
         		</div>	
+        		<!-- 
         		<div class="span3" style="width:300px;margin-top:10px;margin-left:5px;">
           			<a onclick="session(this.id)" id="session_start0" class="btn btn-large btn-block btn-primary">启动限制会话数, 使用指定网口eth0</a>
         		</div>	
+        		 -->
         		<div class="span3" style="width:200px;margin-top:10px;margin-left:5px;">
           			<a onclick="session(this.id)" id="session_unlimited" class="btn btn-large btn-block btn-danger">取消限制会话数</a>
         		</div>	
@@ -69,7 +75,7 @@
 		<div id="accordion-element-4" class="accordion-body collapse">
 			<div class="span4 accordion-inner todo mrm" style="border:2px solid;border-radius:25px;padding:10px;">
 				<div>
-					<label for="lowestMB">文件自动上传下限容量（MB）</label><input type="text" id="lowestMB"/>
+					<label for="lowestMB">文件自动上传下限容量（MB）</label><input type="text" id="lowestMB" value="${globalLowestMB}"/>
 				</div>
 				<div>
 				<div class="span3" style="width:200px;margin-top:10px;margin-left:5px;">

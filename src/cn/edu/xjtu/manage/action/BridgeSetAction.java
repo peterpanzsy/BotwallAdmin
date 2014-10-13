@@ -27,7 +27,7 @@ public class BridgeSetAction extends ActionSupport {
 	
 	public String start() {
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/bridge start" );
+			Runtime.getRuntime().exec("/botwall/script/bridge start" );
 			result="success";
 			msg = "开启网桥成功";
 		} catch (Exception e) {
@@ -40,7 +40,7 @@ public class BridgeSetAction extends ActionSupport {
 	
 	public String restart() {
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/bridge restart");
+			Runtime.getRuntime().exec("/botwall/script/bridge restart");
 			result="success";
 			msg = "重启网桥成功";
 		} catch (Exception e) {
@@ -53,7 +53,7 @@ public class BridgeSetAction extends ActionSupport {
 	
 	public String stop() {
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/bridge stop" );
+			Runtime.getRuntime().exec("/botwall/script/bridge stop" );
 			result="success";
 			msg = "停止网桥成功";
 		} catch (Exception e) {

@@ -4,18 +4,41 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class SessionLimitAction extends ActionSupport {
 	
-	String sessionNum;
+	String IPNum;
+	String TCPNum;
+	String ICMPRateNum;
+	String TCPRateNum;
 	String result;
 	
-	public String getSessionNum() {
-		return sessionNum;
+	
+	public String getIPNum() {
+		return IPNum;
 	}
-	public void setSessionNum(String sessionNum) {
-		this.sessionNum = sessionNum;
+	public void setIPNum(String iPNum) {
+		IPNum = iPNum;
+	}
+	public String getTCPNum() {
+		return TCPNum;
+	}
+	public void setTCPNum(String tCPNum) {
+		TCPNum = tCPNum;
+	}
+	public String getICMPRateNum() {
+		return ICMPRateNum;
+	}
+	public void setICMPRateNum(String iCMPRateNum) {
+		ICMPRateNum = iCMPRateNum;
+	}
+	public String getTCPRateNum() {
+		return TCPRateNum;
+	}
+	public void setTCPRateNum(String tCPRateNum) {
+		TCPRateNum = tCPRateNum;
 	}
 	public String getResult() {
 		return result;
@@ -23,11 +46,15 @@ public class SessionLimitAction extends ActionSupport {
 	public void setResult(String result) {
 		this.result = result;
 	}
-	public String start0() {
-		boolean flag = check(sessionNum);
+	public String start1() {
+		boolean flag = check(IPNum)&&check(TCPNum)&&check(ICMPRateNum)&&check(TCPRateNum);
 		if(flag){
 			try {
-				//Runtime.getRuntime().exec(/botwall/script/sessions_limit start eth0 5 );
+				//Runtime.getRuntime().exec("/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
+				ActionContext.getContext().getApplication().put("TCPNum", TCPNum);
+				ActionContext.getContext().getApplication().put("IPNum", IPNum);
+				ActionContext.getContext().getApplication().put("ICMPRateNum", ICMPRateNum);
+				ActionContext.getContext().getApplication().put("TCPRateNum", TCPRateNum);
 				result="success";
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -39,12 +66,12 @@ public class SessionLimitAction extends ActionSupport {
 		return "SUCCESS";
 	}
 	
-	public String start1(){
-		boolean flag = check(sessionNum);
-		System.out.println(sessionNum);
+	/*public String start0(){
+		boolean flag = check(IPNum)&&check(TCPNum)&&check(ICMPRateNum)&&check(TCPRateNum);
+		
 		if(flag){
 			try {
-				//Runtime.getRuntime().exec("/botwall/script/sessions_limit start eth1 5 ");
+				Runtime.getRuntime().exec("/botwall/script/sessions_limit start eth1 5 ");
 				result="success";
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -55,12 +82,15 @@ public class SessionLimitAction extends ActionSupport {
 		}
 		return "SUCCESS";
 	}
-
+*/
 	public String unlimited(){
-		System.out.println("取消限制会话数命令到了");
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/sessions_limit stop ");
+			//Runtime.getRuntime().exec("/limit stop ");
 			result="success";
+			ActionContext.getContext().getApplication().put("IPNum","还木有限制");
+			ActionContext.getContext().getApplication().put("TCPNum","还木有限制");
+			ActionContext.getContext().getApplication().put("ICMPRateNum","还木有限制");
+			ActionContext.getContext().getApplication().put("TCPRateNum","还木有限制");
 		} catch (Exception e) {
 			e.printStackTrace();
 			result="failure";

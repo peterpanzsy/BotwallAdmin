@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import cn.edu.xjtu.manage.business.LowestMBService;
 
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LowestMBAction extends ActionSupport {
@@ -42,6 +43,7 @@ public class LowestMBAction extends ActionSupport {
 			LowestMBService.getInstance(lowest);
 			result="success";
 			msg="配置成功";
+			ActionContext.getContext().getApplication().put("globalLowestMB", lowestMB);
 		}catch(Exception e){
 			e.printStackTrace();
 			result="failure";

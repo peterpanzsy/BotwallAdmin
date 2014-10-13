@@ -44,20 +44,26 @@ function rateLimitationStop(){
 };
 
 function session(id){
-	var sessionNum = $("#session_num").val();
+	var IPNum = $("#IPNum").val();
+	var TCPNum = $("#TCPNum").val();
+	var ICMPRateNum = $("#ICMPRateNum").val();
+	var TCPRateNum = $("#TCPRateNum").val();
 	var ids = id.split("_");
 	var action ="sessionLimit_"+ids[1]+".action";
 	//验证，正整数小于5
 	var reg = new RegExp("^[1-5]*$");
-	if(!reg.test(sessionNum)){
-        alert("请输入正确的数字，1-5!");
-    }else{
+//	if(!reg.test(sessionNum)){
+//       alert("请输入正确的数字，1-5!");
+//    }else{
 		 $.ajax({
 		 url : action,
 		 type : "post",
          dataType : "json",
          data : {
-		 	"sessionNum" : sessionNum,
+		 	"IPNum" : IPNum,
+			"TCPNum" : TCPNum,
+			"ICMPRateNum" : ICMPRateNum,
+			"TCPRateNum" : TCPRateNum
          },
 		 success : function(data) {
 				if(data.result=="success"){
@@ -72,7 +78,7 @@ function session(id){
 				alert("通讯错误，更新失败！！");						
 			}
 		});
-	}
+	//}
 };
 
 function lowestMBSubmit(){
@@ -135,4 +141,24 @@ function myAJAX(action,myData){
 		}
 	});
 };
+
+/*function getData(){
+	$.ajax({
+	 url : "getDataAction",
+	 type : "post",
+     dataType : "json",
+     data : null,
+	 success : function(data) {
+			if(data.globalUploadRate!=null){
+				$("#uploadRate").val()=data.globalUploadRate;
+			}
+			if(data.globalUploadRate!=null){
+				$("#downloadRate").val()=data.globalDownloadRate;
+			}				
+		},
+		error:function(obj){
+			alert("通讯错误，更新失败！！");						
+		}
+	});
+};*/
 

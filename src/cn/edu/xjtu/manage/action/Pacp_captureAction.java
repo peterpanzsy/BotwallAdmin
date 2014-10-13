@@ -27,9 +27,8 @@ public class Pacp_captureAction extends ActionSupport {
 	
 	
 	public String start() {
-		System.out.println("start");
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/pacp_capture start" );
+			Runtime.getRuntime().exec("/botwall/script/pacp_capture start" );
 			result="success";
 			msg ="开始截获流量成功";
 		} catch (Exception e) {
@@ -41,9 +40,8 @@ public class Pacp_captureAction extends ActionSupport {
 	}
 
 	public String start1() {
-		System.out.println("start1");
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/pacp_capture start eth1" );
+			Runtime.getRuntime().exec("/botwall/script/pacp_capture start eth1" );
 			result="success";
 			msg ="开始截获流量，默认网口eth0成功";
 		} catch (Exception e) {
@@ -55,9 +53,8 @@ public class Pacp_captureAction extends ActionSupport {
 	}
 	
 	public String restart() {
-		System.out.println("restart");
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/pacp_capture restart");
+			Runtime.getRuntime().exec("/botwall/script/pacp_capture restart");
 			result="success";
 			msg ="重新开始截获流量成功";
 		} catch (Exception e) {
@@ -69,9 +66,8 @@ public class Pacp_captureAction extends ActionSupport {
 	}
 	
 	public String stop() {
-		System.out.println("stop");
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/pacp_capture stop" );
+			Runtime.getRuntime().exec("/botwall/script/pacp_capture stop" );
 			result="success";
 			msg ="停止截获流量成功";
 		} catch (Exception e) {

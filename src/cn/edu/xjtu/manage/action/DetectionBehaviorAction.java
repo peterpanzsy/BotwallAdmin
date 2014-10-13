@@ -27,7 +27,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	}
 	public String checkLicence(){
 		try {
-			//Runtime.getRuntime().exec("java -jar /botwall/java/checkLicence.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/checkLicence.jar" );
 			result="success";
 			msg="配置成功";
 		} catch (Exception e) {
@@ -40,7 +40,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	
 	public String attackEvent(){
 		try {
-			//Runtime.getRuntime().exec("java -jar /botwall/java/AttackEvent.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/AttackEvent.jar" );
 			result="success";
 			msg="配置成功";
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	}
 	public String findBotnet(){
 		try {
-			//Runtime.getRuntime().exec("java -jar /botwall/java/findBotnet.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/findBotnet.jar" );
 			result="success";
 			msg="配置成功";
 		} catch (Exception e) {
@@ -64,7 +64,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	}
 	public String detectionCobehave(){
 		try {
-			//Runtime.getRuntime().exec("java -jar /botwall/java/DetectionCobehave.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/DetectionCobehave.jar" );
 			result="success";
 			msg="配置成功";
 		} catch (Exception e) {
