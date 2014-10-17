@@ -35,21 +35,19 @@ public class HoneyFunctionService {
 			tim.cancel();
 		}
 		tim = new Timer();
-		//TODO 这个地方的异常处理不太好，用map可以改进
 		TimerTask tTask = new TimerTask(){
 			@Override
 			public void run() {
-				System.out.println("aaa");
-				/*try {
+				try {
 					Runtime.getRuntime().exec("/botwall/script/pingpots "+email);
 					Runtime.getRuntime().exec("/botwall/script/pingReport "+email);
 				} catch (IOException e) {
 					e.printStackTrace();
-				}*/
+				}
 			}
 		};
-		//tim.scheduleAtFixedRate(tTask,0,minute*60*1000);
-		tim.scheduleAtFixedRate(tTask,0,minute*1000);
+		tim.scheduleAtFixedRate(tTask,0,minute*60*1000);
+		//tim.scheduleAtFixedRate(tTask,0,minute*1000);
 	}
 	
 }

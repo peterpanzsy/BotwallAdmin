@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.edu.xjtu.manage.business.LowestMBService;
+import cn.edu.xjtu.tools.String2IntergerCheck;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -14,7 +15,6 @@ public class LowestMBAction extends ActionSupport {
 	
 	String lowestMB;
 	String result;
-	
 	
 	public String getMsg() {
 		return msg;
@@ -35,22 +35,24 @@ public class LowestMBAction extends ActionSupport {
 		this.result = result;
 	}
 	
-	
 	public String execute() {
-		System.out.println("---"+lowestMB);
-		try{
-			int lowest = Integer.parseInt(lowestMB);
-			LowestMBService.getInstance(lowest);
-			result="success";
-			msg="配置成功";
-			ActionContext.getContext().getApplication().put("globalLowestMB", lowestMB);
-		}catch(Exception e){
-			e.printStackTrace();
-			result="failure";
-			msg="参数失败";
+		boolean flag = String2IntergerCheck.check(lowestMB);
+		if(flag){
+			try{
+				int lowest = Integer.parseInt(lowestMB);
+				LowestMBService.getInstance(lowest);
+				result="success";
+				msg="配置成功";
+				ActionContext.getContext().getApplication().put("globalLowestMB", lowestMB);
+				ActionContext.getContext().getApplication().put("isLowestMBStart", true);
+			}catch(Exception e){
+				e.printStackTrace();
+				result="failure";
+				msg="参数失败";
+			}
+		}else{
+			result="error";
 		}
-
 		return "SUCCESS";
 	}
-	
 }

@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class Pacp_captureAction extends ActionSupport {
@@ -29,6 +30,7 @@ public class Pacp_captureAction extends ActionSupport {
 	public String start() {
 		try {
 			Runtime.getRuntime().exec("/botwall/script/pacp_capture start" );
+			ActionContext.getContext().getApplication().put("isPacp_captureStart", true);
 			result="success";
 			msg ="开始截获流量成功";
 		} catch (Exception e) {
@@ -39,7 +41,8 @@ public class Pacp_captureAction extends ActionSupport {
 		return "SUCCESS";
 	}
 
-	public String start1() {
+/*	不需要了
+ * 	public String start1() {
 		try {
 			Runtime.getRuntime().exec("/botwall/script/pacp_capture start eth1" );
 			result="success";
@@ -50,12 +53,13 @@ public class Pacp_captureAction extends ActionSupport {
 			msg ="开始截获流量失败";
 		}
 		return "SUCCESS";
-	}
+	}*/
 	
 	public String restart() {
 		try {
 			Runtime.getRuntime().exec("/botwall/script/pacp_capture restart");
 			result="success";
+			ActionContext.getContext().getApplication().put("isPacp_captureStart", true);
 			msg ="重新开始截获流量成功";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,6 +73,7 @@ public class Pacp_captureAction extends ActionSupport {
 		try {
 			Runtime.getRuntime().exec("/botwall/script/pacp_capture stop" );
 			result="success";
+			ActionContext.getContext().getApplication().put("isPacp_captureStart", false);
 			msg ="停止截获流量成功";
 		} catch (Exception e) {
 			e.printStackTrace();

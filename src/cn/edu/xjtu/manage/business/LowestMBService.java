@@ -33,20 +33,18 @@ public class LowestMBService {
 			tim.cancel();
 		}
 		tim = new Timer();
-		//TODO 这个地方的异常处理不太好，用map可以改进
 		TimerTask tTask = new TimerTask(){
 			@Override
 			public void run() {
-				System.out.println("aaa");
-				/*try {
+				try {
 					Runtime.getRuntime().exec("./botwall/script/auto_upload "+ lowestMB);
 				} catch (IOException e) {
 					e.printStackTrace();
-				}*/
+				}
 			}
 		};
-		//暂时设置的是每隔一分钟调用一次
-		tim.scheduleAtFixedRate(tTask,0,60*1000);
+		//每20分钟调用一次脚本
+		tim.scheduleAtFixedRate(tTask,0,20*60*1000);
 	}
 	
 }

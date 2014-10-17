@@ -3,7 +3,7 @@
 
 <!-- 暂时先加到这里了 -->
 <script type="text/javascript" src="js/ratelimitation.js"></script>
-<s:debug/>
+
 <div class="accordion" id="accordion-684299">
 	<div class="accordion-group">
 		<div class="accordion-heading">
@@ -116,9 +116,6 @@
 			<div class="span4 accordion-inner todo mrm" style="border:2px solid;border-radius:25px;padding:10px;">
 				<div class="span3" style="width:300px;margin-top:10px;margin-left:5px;">
           			<a onclick="pacp_capture(this.id)" id="pacpCapture-start" class="btn btn-large btn-block btn-primary">开始截获流量，默认网口eth0</a>
-        		</div>
-        		<div class="span3" style="width:300px;margin-top:10px;margin-left:5px;">
-          			<a onclick="pacp_capture(this.id)" id="pacpCapture-start1" class="btn btn-large btn-block btn-primary">开始截获流量，指定网口eth1</a>
         		</div>
         		<div class="span3" style="width:200px;margin-top:10px;margin-left:5px;">
           			<a onclick="pacp_capture(this.id)" id="pacpCapture-stop" class="btn btn-large btn-block btn-danger">停止截获流量</a>

@@ -3,6 +3,8 @@ package cn.edu.xjtu.manage.action;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.edu.xjtu.tools.String2IntergerCheck;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -47,14 +49,16 @@ public class SessionLimitAction extends ActionSupport {
 		this.result = result;
 	}
 	public String start1() {
-		boolean flag = check(IPNum)&&check(TCPNum)&&check(ICMPRateNum)&&check(TCPRateNum);
+		boolean flag = String2IntergerCheck.check(IPNum)&&String2IntergerCheck.check(TCPNum)&&
+				String2IntergerCheck.check(ICMPRateNum)&&String2IntergerCheck.check(TCPRateNum);
 		if(flag){
 			try {
-				//Runtime.getRuntime().exec("/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
+				Runtime.getRuntime().exec("/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
 				ActionContext.getContext().getApplication().put("TCPNum", TCPNum);
 				ActionContext.getContext().getApplication().put("IPNum", IPNum);
 				ActionContext.getContext().getApplication().put("ICMPRateNum", ICMPRateNum);
 				ActionContext.getContext().getApplication().put("TCPRateNum", TCPRateNum);
+				ActionContext.getContext().getApplication().put("isSessionLimitedStart", true);
 				result="success";
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -85,8 +89,9 @@ public class SessionLimitAction extends ActionSupport {
 */
 	public String unlimited(){
 		try {
-			//Runtime.getRuntime().exec("/limit stop ");
+			Runtime.getRuntime().exec("/limit stop ");
 			result="success";
+			ActionContext.getContext().getApplication().put("isSessionLimitedStart", false);
 			ActionContext.getContext().getApplication().put("IPNum","还木有限制");
 			ActionContext.getContext().getApplication().put("TCPNum","还木有限制");
 			ActionContext.getContext().getApplication().put("ICMPRateNum","还木有限制");
@@ -98,16 +103,4 @@ public class SessionLimitAction extends ActionSupport {
 		return "SUCCESS";
 	}
 
-	private boolean check(String sessionNum){
-		Pattern pattern = Pattern.compile("^\\d+$");
-		Matcher matcher = pattern.matcher(sessionNum);
-		if(matcher.matches()==false)
-        {
-             return false;
-        }
-        else
-        {
-             return true;
-        }
-	}
 }

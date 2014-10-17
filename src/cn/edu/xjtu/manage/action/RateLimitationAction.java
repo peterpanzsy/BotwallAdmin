@@ -1,5 +1,7 @@
 package cn.edu.xjtu.manage.action;
 
+import cn.edu.xjtu.tools.String2IntergerCheck;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -32,24 +34,29 @@ public class RateLimitationAction extends ActionSupport {
 	}
 	
 	public String rateLimitStart() {
-		//String globalUploadRate = (String) ActionContext.getContext().getApplication().get("globalUploadRate");
-		//已测试可以拿到全局数据
-		try {
-			//Runtime.getRuntime().exec(new StringBuffer("/botwall/script/wshaper ")
-				//					.append(uploadRate).append(" ").append(downloadRate).append(" ").toString());
-			result="success";
-			ActionContext.getContext().getApplication().put("globalUploadRate", uploadRate);
-			ActionContext.getContext().getApplication().put("globalDownloadRate", downloadRate);
-		} catch (Exception e) {
-			e.printStackTrace();
-			result="failure";
+		boolean flag = String2IntergerCheck.check(uploadRate)&&String2IntergerCheck.check(downloadRate);
+		if(flag){
+			try {
+				Runtime.getRuntime().exec(new StringBuffer("/botwall/script/wshaper ")
+										.append(uploadRate).append(" ").append(downloadRate).append(" ").toString());
+				result="success";
+				ActionContext.getContext().getApplication().put("isRateLimitedStart", true);
+				ActionContext.getContext().getApplication().put("globalUploadRate", uploadRate);
+				ActionContext.getContext().getApplication().put("globalDownloadRate", downloadRate);
+			} catch (Exception e) {
+				e.printStackTrace();
+				result="failure";
+			}
+		}else{
+			result="error";
 		}
 		return "SUCCESS";
 	}
 	public String rateStop(){
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/wshaper stop");
+			Runtime.getRuntime().exec("/botwall/script/wshaper stop");
 			result="success";
+			ActionContext.getContext().getApplication().put("isRateLimitedStart", false);
 			ActionContext.getContext().getApplication().put("globalUploadRate", "还木有限制");
 			ActionContext.getContext().getApplication().put("globalDownloadRate", "还木有限制");
 		} catch (Exception e) {

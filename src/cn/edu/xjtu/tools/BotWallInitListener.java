@@ -17,6 +17,17 @@ public class BotWallInitListener implements ServletContextListener {
 		application.setAttribute("TCPRateNum","还木有限制");
 		application.setAttribute("globalEmail","还木有");
 		application.setAttribute("globalHoneyTime","30");
+		//以下信息是判断是否启用了某项功能
+		application.setAttribute("isHoneyFuntionStart",false);
+		application.setAttribute("isRateLimitedStart",false);
+		application.setAttribute("isSessionLimitedStart",false);
+		application.setAttribute("isLowestMBStart",false);
+		application.setAttribute("isPacp_captureStart",false);
+		application.setAttribute("isBridgeStart",false);
+		application.setAttribute("isAttackEventStart",false);
+		application.setAttribute("isFindBotnetStart",false);
+		application.setAttribute("isCheckLicenceStart",false);
+		application.setAttribute("isDetectionCobehaveStart",false);
 	}
 	public void contextDestroyed(ServletContextEvent arg0) {
 		

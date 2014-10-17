@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import cn.edu.xjtu.manage.business.HoneyFunctionService;
 import cn.edu.xjtu.manage.business.License;
+import cn.edu.xjtu.manage.business.LowestMBService;
 import cn.edu.xjtu.manage.dao.LicenseDao;
 import cn.edu.xjtu.tools.JavaShellUtil;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LicenseAction  extends ActionSupport{
@@ -98,14 +101,66 @@ public class LicenseAction  extends ActionSupport{
 		try {
 //			Process pid = Runtime.getRuntime().exec("/bin/sh /botwall/script/checkLicense.sh");
 			Runtime.getRuntime().exec("sh /botwall/script/checkLicense.sh");
+			//重启服务 
+			systemRestart();
 			re="success";
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			re="failure";
 		}
 		return "SUCCESS"; 
 	}
+	
+	//用于重新启动原有的服务
+	private void systemRestart() throws IOException {
+		//停止所有的服务
+		
+		//重新开启
+		if((Boolean)ActionContext.getContext().getApplication().get("isHoneyFuntionStart")){
+			String email = (String)ActionContext.getContext().getApplication().get("globalEmail");
+			String honeyTime = (String)ActionContext.getContext().getApplication().get("globalHoneyTime");
+			int minute = Integer.parseInt(honeyTime);
+			HoneyFunctionService.getInstance(email, minute);
+		};
+		if((Boolean)ActionContext.getContext().getApplication().get("isRateLimitedStart")){
+			String uploadRate = (String)ActionContext.getContext().getApplication().get("globalUploadRate");
+			String downloadRate = (String)ActionContext.getContext().getApplication().get("globalDownloadRate");
+			Runtime.getRuntime().exec(new StringBuffer("/botwall/script/wshaper ")
+				.append(uploadRate).append(" ").append(downloadRate).append(" ").toString());
+		}
+		if((Boolean)ActionContext.getContext().getApplication().get("isSessionLimitedStart")){
+			String IPNum = (String) ActionContext.getContext().getApplication().get("IPNum");
+			String TCPNum = (String) ActionContext.getContext().getApplication().get("TCPNum");
+			String ICMPRateNum = (String) ActionContext.getContext().getApplication().get("ICMPRateNum");
+			String TCPRateNum = (String) ActionContext.getContext().getApplication().get("TCPRateNum");
+			ActionContext.getContext().getApplication().put("TCPRateNum","还木有限制");
+			Runtime.getRuntime().exec("/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
+		}
+		if((Boolean)ActionContext.getContext().getApplication().get("isLowestMBStart")){
+			String temp = (String)ActionContext.getContext().getApplication().get("globalLowestMB");
+			int lowestMB = Integer.parseInt(temp);
+			LowestMBService.getInstance(lowestMB);
+		}
+		if((Boolean)ActionContext.getContext().getApplication().get("isPacp_captureStart")){
+			Runtime.getRuntime().exec("/botwall/script/pacp_capture start" );
+		}
+		if((Boolean)ActionContext.getContext().getApplication().get("isBridgeStart")){
+			Runtime.getRuntime().exec("/botwall/script/bridge start" );
+		}
+		if((Boolean)ActionContext.getContext().getApplication().get("isAttackEventStart")){
+			Runtime.getRuntime().exec("java -jar /botwall/java/AttackEvent.jar" );
+		}
+		if((Boolean)ActionContext.getContext().getApplication().get("isFindBotnetStart")){
+			Runtime.getRuntime().exec("java -jar /botwall/java/findBotnet.jar" );
+		}
+		if((Boolean)ActionContext.getContext().getApplication().get("isCheckLicenceStart")){
+			Runtime.getRuntime().exec("java -jar /botwall/java/checkLicence.jar" );
+		}
+		if((Boolean)ActionContext.getContext().getApplication().get("isDetectionCobehaveStart")){
+			Runtime.getRuntime().exec("java -jar /botwall/java/DetectionCobehave.jar" );
+		}
+	}
+	
 	public String getLicenseInfo(){
 		LicenseDao dao=new LicenseDao();
 		dataList=dao.getLicense();

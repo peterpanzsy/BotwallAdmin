@@ -85,7 +85,6 @@ public class ControlAction  extends ActionSupport{
 	        System.out.println(ret);*/
 			re="success";	
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			exeResult=e.toString();
 			re="failure";

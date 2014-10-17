@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BridgeSetAction extends ActionSupport {
@@ -29,6 +30,7 @@ public class BridgeSetAction extends ActionSupport {
 		try {
 			Runtime.getRuntime().exec("/botwall/script/bridge start" );
 			result="success";
+			ActionContext.getContext().getApplication().put("isBridgeStart",true);
 			msg = "开启网桥成功";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,6 +43,7 @@ public class BridgeSetAction extends ActionSupport {
 	public String restart() {
 		try {
 			Runtime.getRuntime().exec("/botwall/script/bridge restart");
+			ActionContext.getContext().getApplication().put("isBridgeStart",true);
 			result="success";
 			msg = "重启网桥成功";
 		} catch (Exception e) {
@@ -54,6 +57,7 @@ public class BridgeSetAction extends ActionSupport {
 	public String stop() {
 		try {
 			Runtime.getRuntime().exec("/botwall/script/bridge stop" );
+			ActionContext.getContext().getApplication().put("isBridgeStart",false);
 			result="success";
 			msg = "停止网桥成功";
 		} catch (Exception e) {

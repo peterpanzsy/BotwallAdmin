@@ -2,6 +2,7 @@ package cn.edu.xjtu.manage.action;
 
 import cn.edu.xjtu.manage.business.HoneyFunctionService;
 import cn.edu.xjtu.manage.business.LowestMBService;
+import cn.edu.xjtu.tools.String2IntergerCheck;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -13,33 +14,46 @@ public class HoneyFunctionAction extends ActionSupport{
 	String msg;
 	
 	public String start(){
-		try{
-			int minute = Integer.parseInt(honeyTime);
-			HoneyFunctionService.getInstance(email, minute);
-			result="success";
-			msg="配置成功";
-			ActionContext.getContext().getApplication().put("globalEmail", email);
-			ActionContext.getContext().getApplication().put("globalHoneyTime",honeyTime);
-		}catch(Exception e){
-			e.printStackTrace();
-			result="failure";
-			msg="参数失败";
+		boolean flag = String2IntergerCheck.check(honeyTime);
+		if(flag){
+			try{
+				int minute = Integer.parseInt(honeyTime);
+				HoneyFunctionService.getInstance(email, minute);
+				result="success";
+				msg="配置成功";
+				ActionContext.getContext().getApplication().put("isHoneyFuntionStart",true);
+				ActionContext.getContext().getApplication().put("globalEmail", email);
+				ActionContext.getContext().getApplication().put("globalHoneyTime",honeyTime);
+			}catch(Exception e){
+				e.printStackTrace();
+				result="failure";
+				msg="参数失败";
+			}
+		}else{
+			result = "error";
 		}
+		
 		return "SUCCESS";
 	}
 	
 	public String setTime(){
-		try{
-			email = (String)ActionContext.getContext().getApplication().get("globalEmail");
-			int minute = Integer.parseInt(honeyTime);
-			HoneyFunctionService.getInstance(email, minute);
-			result="success";
-			msg="配置成功";
-			ActionContext.getContext().getApplication().put("globalHoneyTime",honeyTime);
-		}catch(Exception e){
-			e.printStackTrace();
-			result="failure";
-			msg="参数失败";
+		boolean flag = String2IntergerCheck.check(honeyTime);
+		if(flag){
+			try{
+				email = (String)ActionContext.getContext().getApplication().get("globalEmail");
+				int minute = Integer.parseInt(honeyTime);
+				HoneyFunctionService.getInstance(email, minute);
+				result="success";
+				msg="配置成功";
+				ActionContext.getContext().getApplication().put("isHoneyFuntionStart",true);
+				ActionContext.getContext().getApplication().put("globalHoneyTime",honeyTime);
+			}catch(Exception e){
+				e.printStackTrace();
+				result="failure";
+				msg="参数失败";
+			}
+		}else{
+			result="error";
 		}
 		return "SUCCESS";
 	}
