@@ -114,7 +114,7 @@ public class LicenseAction  extends ActionSupport{
 	//用于重新启动原有的服务
 	private void systemRestart() throws IOException {
 		//停止所有的服务
-		
+		Runtime.getRuntime().exec("/stopAll");
 		//重新开启
 		if((Boolean)ActionContext.getContext().getApplication().get("isHoneyFuntionStart")){
 			String email = (String)ActionContext.getContext().getApplication().get("globalEmail");
