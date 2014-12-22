@@ -84,15 +84,17 @@ function session(id){
 
 function lowestMBSubmit(){
 	var lowestMB = $("#lowestMB").val();
+	var lowestMBEmail = $("#lowestMBEmail").val();
 	//TODO 为什么这个地方会有问题，在后台显示lowestMB为null，我就奇了怪了
 	//myAJAX("lowestMB.action","{'lowestMB':"+lowestMB+"}");
-	if(check_Integer(lowestMB)){
+	if(check_Integer(lowestMB)&&check_Email(lowestMBEmail)){
 		$.ajax({
 		 url : "lowestMB.action",
 		 type : "post",
          dataType : "json",
          data : {
-		 	"lowestMB" : lowestMB
+		 	"lowestMB" : lowestMB,
+		 	"lowestMBEmail":lowestMBEmail
 		 },
 		 success : function(data) {
 				if(data.result=="success"){

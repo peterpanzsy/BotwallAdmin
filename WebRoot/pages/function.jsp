@@ -81,6 +81,7 @@
 			<div class="span4 accordion-inner todo mrm" style="border:2px solid;border-radius:25px;padding:10px;">
 				<div>
 					<label for="lowestMB">文件自动上传下限容量（MB）</label><input type="text" id="lowestMB" value="${globalLowestMB}"/>
+					<label for="lowestMBEmail">管理员邮箱</label><input type="text" name=lowestMBEmail id=lowestMBEmail value="${globalLowestMBEmail}" class="span3"><br/>
 				</div>
 				<div>
 				<div class="span3" style="width:200px;margin-top:10px;margin-left:5px;">

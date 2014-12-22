@@ -14,6 +14,7 @@ public class LowestMBAction extends ActionSupport {
 	String msg;
 	
 	String lowestMB;
+	String lowestMBEmail;
 	String result;
 	
 	public String getMsg() {
@@ -24,6 +25,12 @@ public class LowestMBAction extends ActionSupport {
 	}
 	public String getLowestMB() {
 		return lowestMB;
+	}
+	public String getLowestMBEmail() {
+		return lowestMBEmail;
+	}
+	public void setLowestMBEmail(String lowestMBEmail) {
+		this.lowestMBEmail = lowestMBEmail;
 	}
 	public void setLowestMB(String lowestMB) {
 		this.lowestMB = lowestMB;
@@ -40,10 +47,12 @@ public class LowestMBAction extends ActionSupport {
 		if(flag){
 			try{
 				int lowest = Integer.parseInt(lowestMB);
-				LowestMBService.getInstance(lowest);
+				System.out.println(lowestMBEmail);
+				LowestMBService.getInstance(lowest,lowestMBEmail);
 				result="success";
 				msg="配置成功";
 				ActionContext.getContext().getApplication().put("globalLowestMB", lowestMB);
+				ActionContext.getContext().getApplication().put("globallowestMBEmail", lowestMBEmail);
 				ActionContext.getContext().getApplication().put("isLowestMBStart", true);
 			}catch(Exception e){
 				e.printStackTrace();

@@ -11,6 +11,7 @@ public class BotWallInitListener implements ServletContextListener {
 		application.setAttribute("globalUploadRate","还木有限制");
 		application.setAttribute("globalDownloadRate","还木有限制");
 		application.setAttribute("globalLowestMB","还木有限制");
+		application.setAttribute("globalLowestMBEmail","还木有限制");
 		application.setAttribute("IPNum","还木有限制");
 		application.setAttribute("TCPNum","还木有限制");
 		application.setAttribute("ICMPRateNum","还木有限制");

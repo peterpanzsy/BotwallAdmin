@@ -138,8 +138,9 @@ public class LicenseAction  extends ActionSupport{
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isLowestMBStart")){
 			String temp = (String)ActionContext.getContext().getApplication().get("globalLowestMB");
+			String tempEmail = (String)ActionContext.getContext().getApplication().get("globalLowestMBEmail");
 			int lowestMB = Integer.parseInt(temp);
-			LowestMBService.getInstance(lowestMB);
+			LowestMBService.getInstance(lowestMB,tempEmail);
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isPacp_captureStart")){
 			Runtime.getRuntime().exec("/botwall/script/pacp_capture start" );

@@ -39,9 +39,9 @@ public class HoneyFunctionService {
 			@Override
 			public void run() {
 				try {
-					Runtime.getRuntime().exec("/botwall/script/pingpots "+email);
-					Runtime.getRuntime().exec("/botwall/script/pingReport "+email);
-				} catch (IOException e) {
+					//Runtime.getRuntime().exec("/botwall/script/pingpots "+email);
+					//Runtime.getRuntime().exec("/botwall/script/pingReport "+email);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

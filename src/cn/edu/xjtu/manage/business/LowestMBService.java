@@ -11,6 +11,7 @@ public class LowestMBService {
 	
 	Timer tim = null;
 	int lowestMB;
+	String lowestMBEmail;
 
 	private LowestMBService(int lowestMB) {
 		super();
@@ -18,11 +19,12 @@ public class LowestMBService {
 		run();
 	}
 	
-	public static LowestMBService getInstance(int lowestMB){
+	public static LowestMBService getInstance(int lowestMB,String lowstestMBEmail){
 		if(ls == null){
 			ls = new LowestMBService(lowestMB);
 		}else{
 			ls.lowestMB = lowestMB;
+			ls.lowestMBEmail = lowstestMBEmail;
 			ls.run();
 		}
 		return null;
@@ -37,8 +39,8 @@ public class LowestMBService {
 			@Override
 			public void run() {
 				try {
-					Runtime.getRuntime().exec("./botwall/script/auto_upload "+ lowestMB);
-				} catch (IOException e) {
+//					Runtime.getRuntime().exec("./botwall/script/auto_upload "+ lowestMB+" "+lowestMBEmail);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
