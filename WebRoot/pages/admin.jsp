@@ -106,7 +106,9 @@ else{
 		border-color: #666666;
 		background-color: #ffffff;
 	}
-
+	.span3{
+		margin-left:12px
+	}
 	</style>
 
 </head>
@@ -147,7 +149,7 @@ else{
 				  <li style="width:200px;"><a href="#side-tab6">网络配置</a></li>
 				  <li style="width:200px;"><a href="#side-tab7">白名单配置</a></li>
 				  <li style="width:200px;"><a href="#side-tab2">蜜罐主机配置</a></li>
-				 <!--  <li style="width:200px;"><a href="#side-tab0">控制主机配置</a></li> -->
+				  <li style="width:200px;"><a href="#side-tab0">控制主机配置</a></li> 
 				  <li style="width:200px;"><a href="#side-tab3">数据库配置</a></li>
 				  <li style="width:200px;"><a href="#side-tab1">License配置</a></li>
 				  <li style="width:200px;"><a href="#side-tab4">FTP服务器配置</a></li>
@@ -155,7 +157,7 @@ else{
 				  
 				  <!--<li style="width:200px;"><a href="#side-tab5">协同行为分析参数配置</a></li> -->
 				 </ul>
-				    <div style="position:absolute;top:600px;">
+				    <div style="position:absolute;top:650px;">
 					   <div class="span3" style="width:200px;margin-left:5px;" >
 				          <a href=" javascript:void(0)" onclick="reloadAllConfig();" class="btn btn-large btn-block btn-primary">配置生效</a>
 				        </div>
@@ -306,13 +308,13 @@ else{
 		      		</div>	      		
 					
 				  </div>
-		<!-- 		  <div id="side-tab0" style="margin-left:120px;">
+				  <div id="side-tab0" style="margin-left:120px;">
 					<h2>控制主机管理</h2>
-					<table id="ControlIPList" class="table table-striped table-bordered table-hover datatable " ></table>
+					<table id="ControlIpList" class="table table-striped table-bordered table-hover datatable " ></table>
 		      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:800" >
-		      			<div id="ControlIPPager" ></div>
+		      			<div id="ControlIpPager" ></div>
 		      		</div>	      						
-				  </div> -->
+				  </div> 
 				  <div id="side-tab3" style="margin-left:100px;">
 				   <h2>数据库配置</h2>
 				   <form id="updateDBForm" action="updateDB.action" method="post"> 
@@ -421,10 +423,10 @@ else{
 	
 		</div>
     </div>
-    <footer style="margin-top:auto;color: #999999;padding: 40px;text-align: center;color:white;background-color:rgba(149, 187, 224, 0.33)">
+  <!--   <footer style="margin-top:500px;color: #999999;padding: 40px;text-align: center;color:white;background-color:rgba(149, 187, 224, 0.33)">
   		<span id="copyright">&copy; 2014 </span> 
-	</footer>
-   
+	</footer> -->
+
 		
 			<!-- 添加IP白名单的模态框 -->   	
 		<div class="modal fade" id="add_whiteip_modal">
@@ -539,6 +541,49 @@ else{
 					        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 					        <button type="submit" class="btn btn-primary" onmouseup=getipvalue(ip1,ip2,ip3,ip4,ipvalue) >保存</button>
 					   </div> -->
+					</form> 
+		      </div>
+		     
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+			<!-- 添加控制主机的模态框 -->   	
+		<div class="modal fade" id="add_controlip_modal">
+		  <div class="modal-dialog" >
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h2 class="modal-title" style="font-weight:bold;font-family:幼圆">添加控制主机</h2>
+		      </div>
+		      <div class="modal-body">
+				   <form id="addControlIpForm">					 
+					  <table width="100%" cellpadding="0" cellspacing="0" class="post_table">		      		
+		      			<tr>
+		      				<td><label width="30%" align="right"style="font-weight:bold;font-family:黑体;font-size:20px;" >IP：</label></td>
+				            <td>
+				            <div class=all_input>						  
+						    <input id="controlip1" name=controlip1 class=ip_input maxlength=3
+							onkeydown=keyDownEvent(this) onkeyup=keyUpEvent(controlip1,controlip1,controlip2)>.<input
+							     id="controlip2" name=controlip2 class=ip_input maxlength=3 onkeydown=keyDownEvent(this) 
+							onkeyup=keyUpEvent(controlip1,controlip2,controlip3)>.<input
+							    id="controlip3" name=controlip3 class=ip_input maxlength=3 onkeydown=keyDownEvent(this)
+							 onkeyup=keyUpEvent(controlip2,controlip3,controlip4)>.<input
+							    id="controlip4" name=controlip4 class=ip_input maxlength=3 onkeydown=keyDownEvent(this)
+							 onkeyup=keyUpEventForIp4(controlip3,controlip4)>
+						    <input name = controlipvalue TYPE="hidden">						
+						  	</div><label></label>
+				            <em style="color:red">*</em></td>
+		      			</tr>
+		      			<tr>
+		      				<td><label align="right" style="font-weight:bold;font-family:黑体;font-size:20px;" >备注：</label></td>
+		      				<td><input id="controlipremark" type="text" class="input2" name="controlipremark"/></td>
+		      			</tr>			      		
+					   </table>
+					   <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					        <button type="submit" class="btn btn-primary" >保存</button>
+					   </div>
 					</form> 
 		      </div>
 		     

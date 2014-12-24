@@ -16,23 +16,47 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import cn.edu.xjtu.manage.business.Cluster;
 import cn.edu.xjtu.manage.business.DB;
 import cn.edu.xjtu.manage.business.HoneyPot;
+import cn.edu.xjtu.tools.HibernateSessionManager;
 
 public class ClusterDao {
+	 Session session ;
+	 
+	public ClusterDao()
+	{		
+		session = HibernateSessionManager.getThreadLocalSession();
+	}
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+
+	public void initDao()
+	{	
+		session = HibernateSessionManager.getThreadLocalSession();
+	
+	}	
 	
 	public int updateParameter(int id, String interval) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		// TODO Auto-generated method stub
 		if(id<1){
 			Query q = session.createSQLQuery("insert into t_cluster(cluster_interval) values (?)");
 			q.setParameter(0, interval);
 			int result=q.executeUpdate();
-			tx.commit();
 			return result;
 		}else{
 			SQLQuery q = session.createSQLQuery("update t_cluster t set t.cluster_interval=? where t.ID=?");
 			q.setParameter(0, interval);
 			q.setParameter(1, id);
 			int re=q.executeUpdate();
-			tx.commit();
 			return re;
 		}
 	}
@@ -53,35 +77,4 @@ public class ClusterDao {
 		return re;
 	}
 	
-	
-	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-	
-
-	public ClusterDao()
-	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	
-	}
-	
-	private  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
-	public void commit(){
-		tx.commit();
-		session.close();
-	}
-
 }

@@ -14,10 +14,36 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import cn.edu.xjtu.manage.business.WhiteDomain;
+import cn.edu.xjtu.tools.HibernateSessionManager;
 
 public class WhiteDomainDao {
+	Session session ;
+	 
+	public WhiteDomainDao()
+	{		
+		session = HibernateSessionManager.getThreadLocalSession();
+	}
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+
+	public void initDao()
+	{	
+		session = HibernateSessionManager.getThreadLocalSession();
 	
+	}	
+		
 	public List<WhiteDomain> getWhiteDomainList() {
+		
 		SQLQuery q = session.createSQLQuery("SELECT t.id,t.domain,t.remark FROM t_whitedomain t");
 		List l = q.list();
 		List<WhiteDomain> re=new ArrayList<WhiteDomain>();
@@ -44,16 +70,16 @@ public class WhiteDomainDao {
 	}
 	
 	public int addWhiteDomain(String domain,String remark){
-		
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_whitedomain (domain,remark) values (?,?)");
 		q.setParameter(0, domain);
 		q.setParameter(1, remark);
 		int result=q.executeUpdate();
-		tx.commit();
 		return result;
 	}
 	
 	public int deleteWhiteDomain(int id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_whitedomain where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -78,35 +104,6 @@ public class WhiteDomainDao {
 			  String name = (String)row[1];  
 			  System.out.println(id+" "+name);
 		}
-	}
-	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-	
-
-	public WhiteDomainDao()
-	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	
-	}
-	
-	private  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
-	public void commit(){
-		tx.commit();
-		session.close();
 	}
 	
 }

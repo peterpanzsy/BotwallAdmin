@@ -8,7 +8,11 @@ function getLicense(){
 			if(data.license!=null){						
 				license=data.license;						
 				$("#licenseStr").val(license.license);
-				var newExpires=license.expires.replace("T"," ");
+				var newExpires="";
+				if (license.expires){
+					newExpires=license.expires.replace("T"," ");
+				}
+				
 				$("#licenseDate").val(newExpires);
 				$("#licenseID").val(license.id);
 				if(license.isvalid==0){
@@ -637,7 +641,68 @@ $(
 				});
 			}
 		});		
-	
+		
+		$("#addControlIpForm").validate({
+			debug:true,
+			onsubmit:true,
+			onfocusout:false,
+			onkeyup:true,
+			rules:{
+				controlip1:{
+					required:true,digits:true
+				},
+				controlip2:{
+					required:true,digits:true
+				},
+				controlip3:{
+					required:true,digits:true
+				},
+				controlip4:{
+					required:true,digits:true
+				}
+			},
+			messages:{
+				controlip1:{
+					required:"请补全IP!",digits:"输入不是整数！"
+				},
+				controlip2:{
+					required:"请补全IP!",digits:"输入不是整数！"
+				},
+				controlip3:{
+					required:"请补全IP!",digits:"输入不是整数！"
+				},
+				controlip4:{
+					required:"请补全IP!",digits:"输入不是整数！"
+				}		
+			},
+			errorPlacement: function(error, element) {
+			    error.appendTo( element.parent("div").next("label") );
+			  },
+			submitHandler:function(){
+				
+				var controlipvalue = $("#controlip1").val() + "." + $("#controlip2").val() + "."+ $("#controlip3").val() + "." + $("#controlip4").val();	
+				$("#controlipvalue").val(controlipvalue); 
+				$.ajax({
+					type : 'POST',
+					url : 'addControlIp.action',
+					data : {
+						ip:controlipvalue,
+						remark:$("#controlipremark").val(),
+						//ifrunning:$("#ifrunning").val()
+					},
+					dataType:'json',
+					success : function(msg) {	
+						alert("更新成功！");	
+						$("#add_controlip_modal").modal('hide');
+						$("#ControlIpList").trigger("reloadGrid");
+					},
+					error:function(msg){
+						alert("通讯错误，更新失败！！");						
+					}
+				});
+			}
+		});		
+		
 		var datagrid = jQuery("#UserList")
 		.jqGrid(
 				{
@@ -1016,6 +1081,134 @@ $(
 		    } 
 		}
 	
+	var datagrid1 = jQuery("#ControlIpList").jqGrid(
+			{
+				url : "listControlIp.action",// 后端的数据交互程序，改为你的
+				datatype : "json",// 前后交互的格式是json数据
+				mtype : 'POST',// 交互的方式是发送httpget请求						
+				colNames : [ '序号', 'IP','备注','编号'],// 表格的列名
+				colModel : [
+						{
+							name : 'order',
+							index : 'order',
+							width : 50,
+							align : "center",
+							sortable:true,
+						},// 每一列的具体信息，index是索引名，当需要排序时，会传这个参数给后端
+						{
+							name : 'ip',
+							index : 'ip',
+							width : 150,
+							align : "center",
+							sortable:true
+						},
+						{
+							name:'remark',
+							index:'remark',
+							width:150,
+							align:'center'
+						},
+						{
+							name : 'id',
+							index : 'id',
+							width : 200,
+							align : "center",
+							sortable:true,
+							hidden:true
+						}
+						],
+//				autowidth:true,
+				editurl:"editData.action",
+				rowNum:10,//每一页的行数
+				height: 'auto',
+				width:800,
+				rowList:[10,20,30],
+				pager: '#ControlIpPager',
+				sortname: 'id',
+				viewrecords: true,
+				sortorder: "desc",
+				multiselect: true,  //可多选，出现多选框 
+			    multiselectWidth: 35, //设置多选列宽度 
+				jsonReader: {//读取后端json数据的格式
+				root: "dataList",//保存详细记录的名称
+				total: "total",//总共有页
+				page: "page",//当前是哪一页
+				records: "records",//总共记录数
+				repeatitems: false
+				},
+				caption: "控制主机列表",//表格名称,
+				jsonReader : {// 读取后端json数据的格式
+					root : "dataList",// 保存详细记录的名称
+					// total: "total",//总共有页
+					// page: "page",//当前是哪一页
+					records : "records",// 总共记录数
+					repeatitems : false
+				}
+			}
+	);
+	
+	datagrid1.jqGrid('navGrid','#ControlIpPager',{
+		edit : false,
+		add : false,
+		search:false,
+		del : false}).jqGrid('navButtonAdd',"#ControlIpPager",{
+				title:'添加',
+				caption:"添加",
+				id:"add_ControlIpList",
+				onClickButton : function addModal(){
+					// 配置对话框
+						$('#add_controlip_modal').modal();								
+				},
+				position:"first"
+			
+		
+			}).jqGrid('navButtonAdd',"#ControlIpPager",{
+				title:'删除',
+				caption:"删除",	
+				id:"delete_control_ip",
+				onClickButton:deletControlIP,
+				position:"first"
+			});
+	
+	function deletControlIP() {
+		
+		    var sels = $("#ControlIpList").jqGrid('getGridParam','selarrrow'); 
+		    if(sels==""){
+		       alert("请选择要删除的项!");
+		    }else{ 
+		    	var selectedIDs={};
+		    	$.each(sels,function(i,n){ 
+		          if(sels[i]!=""){ 
+		        	  var rowData = $("#ControlIpList").jqGrid("getRowData", sels[i]);
+		        	  selectedIDs["ids[" + i + "]"]=rowData.id;
+		          } 
+		    	}); 
+		
+		       if(confirm("您是否确认删除？")){ 
+		        $.ajax({ 
+		          type: "POST", 
+		          url: "delControlIp.action", 
+		          data: selectedIDs, 
+		          success: function(msg){ 
+		        	alert("删除成功！");
+					$("#ControlIpList").trigger("reloadGrid");
+		               if(msg!=0){ 
+		                   var arr = msg.split(','); 
+		                   $.each(arr,function(i,n){ 
+		                         if(arr[i]!=""){ 
+		                             $("#ControlIpList").jqGrid('delRowData',n);  
+		                         } 
+		                   }); 
+		                   $().message("已成功删除!"); 
+		               }else{ 
+		                   $().message("操作失败！"); 
+		               } 
+		          } 
+		        }); 
+		       } 
+		    } 
+		}
+	
 	var datagrid = jQuery("#WhiteDomainList")
 	.jqGrid(
 			{
@@ -1148,6 +1341,10 @@ $(
 		       } 
 		    } 
 		}
+	
+
+	
+	
 }//function结束
 
 	

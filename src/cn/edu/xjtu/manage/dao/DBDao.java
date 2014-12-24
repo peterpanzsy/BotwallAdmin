@@ -12,16 +12,42 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+
 import cn.edu.xjtu.manage.business.DB;
 import cn.edu.xjtu.manage.business.FTP;
 import cn.edu.xjtu.manage.business.HoneyPot;
 import cn.edu.xjtu.manage.business.NetConf;
+import cn.edu.xjtu.tools.HibernateSessionManager;
 
 
 public class DBDao {
+	Session session ;
+	 
+	public DBDao()
+	{		
+		session = HibernateSessionManager.getThreadLocalSession();
+	}
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
 
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+
+	public void initDao()
+	{	
+		session = HibernateSessionManager.getThreadLocalSession();
+	
+	}	
 	public int updateDB(int id, String ip, String dbport,String dbname, String dbuser,String dbpasswd) {
 		// TODO Auto-generated method stub
+		HibernateSessionManager.getThreadLocalTransaction();
 		if(id<1){
 			Query q = session.createSQLQuery("insert into t_dbinfo (db_ip,db_port,db_name,db_user,db_passwd) values (?,?,?,?,?)");
 			q.setParameter(0, ip);
@@ -30,7 +56,6 @@ public class DBDao {
 			q.setParameter(3, dbuser);
 			q.setParameter(4, dbpasswd);
 			int result=q.executeUpdate();
-			tx.commit();
 			return result;
 		}else{
 			SQLQuery q = session.createSQLQuery("update t_dbinfo t set db_ip=?,db_port=?,db_name=?,db_user=?,db_passwd=? where t.ID=?");
@@ -41,7 +66,6 @@ public class DBDao {
 			q.setParameter(4, dbpasswd);
 			q.setParameter(5, id);
 			int re=q.executeUpdate();
-			tx.commit();
 			return re;
 		}
 	}
@@ -67,6 +91,7 @@ public class DBDao {
 	}
 	
 	public int updateFTP(int id, String ip, String dbport, String dbuser,String dbpasswd) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		// TODO Auto-generated method stub
 		if(id<1){
 			Query q = session.createSQLQuery("insert into t_ftpinfo (ip,port,user,passwd) values (?,?,?,?)");
@@ -75,7 +100,6 @@ public class DBDao {
 			q.setParameter(2, dbuser);
 			q.setParameter(3, dbpasswd);
 			int result=q.executeUpdate();
-			tx.commit();
 			return result;
 		}else{
 			SQLQuery q = session.createSQLQuery("update t_ftpinfo t set ip=?,port=?,user=?,passwd=? where t.ID=?");
@@ -85,7 +109,6 @@ public class DBDao {
 			q.setParameter(3, dbpasswd);
 			q.setParameter(4, id);
 			int re=q.executeUpdate();
-			tx.commit();
 			return re;
 		}
 	}
@@ -110,6 +133,7 @@ public class DBDao {
 	}
 	
 	public int updateNetConf(int id, String netip, String maskip, String gateip,String dns1ip,String dns2ip) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		// TODO Auto-generated method stub
 		if(id<1){
 			Query q = session.createSQLQuery("insert into t_netconfinfo (netip,maskip,gateip,dns1ip,dns2ip) values (?,?,?,?,?)");
@@ -119,7 +143,6 @@ public class DBDao {
 			q.setParameter(3, dns1ip);
 			q.setParameter(4,dns2ip);
 			int result=q.executeUpdate();
-			tx.commit();
 			return result;
 		}else{
 			SQLQuery q = session.createSQLQuery("update t_netconfinfo t set netip=?,maskip=?,gateip=?,dns1ip=?,dns2ip=? where t.ID=?");
@@ -130,7 +153,6 @@ public class DBDao {
 			q.setParameter(4,dns2ip);
 			q.setParameter(5, id);
 			int re=q.executeUpdate();
-			tx.commit();
 			return re;
 		}
 	}
@@ -172,7 +194,6 @@ public class DBDao {
 	}
 	
 	public int getCountPot(){
-
 		String sql="select count(*) from t_pot t ";
 		SQLQuery q = session.createSQLQuery(sql);
 		Integer count=((BigInteger)q.uniqueResult()).intValue();
@@ -180,15 +201,15 @@ public class DBDao {
 	}
 	
 	public int addPot(String ip){
-		
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_pot (ip) values (?)");
 		q.setParameter(0, ip);
 		int result=q.executeUpdate();
-		tx.commit();
 		return result;
 	}
 	
 	public int deletePot(int id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_pot where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
@@ -196,35 +217,6 @@ public class DBDao {
 		
 	}
 
-
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-	
-
-	public DBDao()
-	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	
-	}
-	
-	private  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
-	public void commit(){
-		tx.commit();
-		session.close();
-	}
 
 	
 }

@@ -12,10 +12,35 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+
 import cn.edu.xjtu.manage.business.HoneyPot;
+import cn.edu.xjtu.tools.HibernateSessionManager;
 
 public class HoneyPotDao {
+	Session session ;
+	 
+	public HoneyPotDao()
+	{		
+		session = HibernateSessionManager.getThreadLocalSession();
+	}
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+
+	public void initDao()
+	{	
+		session = HibernateSessionManager.getThreadLocalSession();
 	
+	}	
 	public List<HoneyPot> getHoneyPotList() {
 		SQLQuery q = session.createSQLQuery("SELECT t.id,t.ip FROM t_pot t");
 		List l = q.list();
@@ -41,23 +66,21 @@ public class HoneyPotDao {
 	}
 	
 	public int addPot(String ip){
-		
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_pot (ip) values (?)");
 		q.setParameter(0, ip);
 		int result=q.executeUpdate();
-		tx.commit();
 		return result;
 	}
 	
 	public int deletePot(int id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_pot where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
 		return re;
 		
 	}
-
-	
 	//遍历
 	public  void all()
 	{
@@ -74,35 +97,6 @@ public class HoneyPotDao {
 			  String name = (String)row[1];  
 			  System.out.println(id+" "+name);
 		}
-	}
-	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-	
-
-	public HoneyPotDao()
-	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	
-	}
-	
-	private  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
-	public void commit(){
-		tx.commit();
-		session.close();
 	}
 	
 }

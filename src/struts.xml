@@ -123,6 +123,20 @@
 			</result>
 		</action>
 		
+		<action name="listControlIp" method="list" class="cn.edu.xjtu.manage.action.ControlIpAction">
+			<result name="SUCCESS" type="json"></result>
+		</action>
+		
+		<action name="addControlIp" method="add" class="cn.edu.xjtu.manage.action.ControlIpAction">
+			<result name="SUCCESS" type="json"></result>
+		</action>
+		
+		<action name="delControlIp" class="cn.edu.xjtu.manage.action.ControlIpAction"
+			method="delete">
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+		
 		<action name="logout" method="logout" class="cn.edu.xjtu.manage.action.LoginAction">
 			<result type="json">				
 			</result>

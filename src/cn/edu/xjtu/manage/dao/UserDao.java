@@ -21,7 +21,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+
 import cn.edu.xjtu.manage.business.User;
+import cn.edu.xjtu.tools.HibernateSessionManager;
 
 
 public class UserDao  {
@@ -37,21 +39,31 @@ public class UserDao  {
     public static final String ADDTIME="addTime";
     public static final String LASTLOGINTIME="lastLoginTime";
     public static final String LOGINTIMES="loginTimes";
-    
+    Session session ;
+	 
 	public UserDao()
-	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	
+	{		
+		session = HibernateSessionManager.getThreadLocalSession();
 	}
-	
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
 
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+
+	public void initDao()
+	{	
+		session = HibernateSessionManager.getThreadLocalSession();
+	
+	}	
+	
 	//遍历
 	public  void all()
 	{
@@ -60,9 +72,6 @@ public class UserDao  {
 		List l = q.list();
 		for(int i=0;i<l.size();i++)
 		{
-			//TestDb user = (TestDb)l.get(i);
-			//System.out.println(user.getUsername());
-
 			  Object[] row = (Object[])l.get(i);;
 			  Integer id = (Integer)row[0];
 			  String name = (String)row[1];  
@@ -72,69 +81,34 @@ public class UserDao  {
 	
 	
 	public int addUser(String username,String password){
-		
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("insert into t_user (username,password) values (?,?)");
 		q.setParameter(0, username);
 		q.setParameter(1, password);
-//		q.setParameter(2, usergroupid);
-//		q.setParameter(3, email);
-//		q.setParameter(4, state);
-//		q.setParameter(5, info);
 		int result=q.executeUpdate();
-		
-		tx.commit();
+
 		return result;
 	}
 	
 	public int updateUser(String username,String password){
-		
+		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery("update t_user set username=?,password=?");
 		q.setParameter(0, username);
 		q.setParameter(1, password);
 		int result=q.executeUpdate();
-		
-		tx.commit();
 		return result;
 	}
 	
 	
 	public int deleteUser(int id) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		SQLQuery q = session.createSQLQuery("delete from t_user where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
 		return re;
 		
 	}
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-	
 
-	public void initDao()
-	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	
-	}
-	
-	private  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
-	
-	public void commit(){
-		tx.commit();
-		session.close();
-	}
-	
 	public User searchUser(String name,String pass,String type){
 		
 		
@@ -225,21 +199,6 @@ public class UserDao  {
 	public static String getLOGINTIMES() {
 		return LOGINTIMES;
 	}
-	
-//	public static String getUSERGROUPID() {
-//		return USERGROUPID;
-//	}
-//
-//	public static String getEMAIL() {
-//		return EMAIL;
-//	}
-//
-//	public static String getSTATE() {
-//		return STATE;
-//	}
-//
-//	public static String getINFO() {
-//		return INFO;
-//	}
+
 
 }

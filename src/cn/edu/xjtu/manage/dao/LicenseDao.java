@@ -1,6 +1,4 @@
 package cn.edu.xjtu.manage.dao;
-
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,27 +6,43 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
-
-import cn.edu.xjtu.manage.business.Cluster;
-import cn.edu.xjtu.manage.business.DB;
-import cn.edu.xjtu.manage.business.HoneyPot;
 import cn.edu.xjtu.manage.business.License;
+import cn.edu.xjtu.tools.HibernateSessionManager;
 
 public class LicenseDao {
+	 Session session ;
+	 
+	public LicenseDao()
+	{		
+		session = HibernateSessionManager.getThreadLocalSession();
+	}
+	public void close() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.commitThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+	public void roll() {
+		// TODO Auto-generated method stub
+		HibernateSessionManager.rollbackThreadLocalTransaction();
+		HibernateSessionManager.closeThreadLocalSession();
+	}
+
+
+	public void initDao()
+	{	
+		session = HibernateSessionManager.getThreadLocalSession();
 	
+	}	
+		
 	public int updateLicense(int id, String license,Date expires,int isvalid) {
+		HibernateSessionManager.getThreadLocalTransaction();
 		if(id<1){
 			Query q = session.createSQLQuery("insert into t_license(license,expires,isvalid) values (?,?,?)");
 			q.setParameter(0, license);
 			q.setParameter(1, expires);
 			q.setParameter(2, isvalid);
 			int result=q.executeUpdate();
-			tx.commit();
 			return result;
 		}else{
 			SQLQuery q = session.createSQLQuery("update t_license t set t.license=?,t.expires=?,t.isvalid=? where t.ID=?");
@@ -37,7 +51,6 @@ public class LicenseDao {
 			q.setParameter(2, isvalid);
 			q.setParameter(3, id);
 			int re=q.executeUpdate();
-			tx.commit();
 			return re;
 		}
 	}
@@ -61,34 +74,4 @@ public class LicenseDao {
 	}
 	
 	
-	
-	 SessionFactory sessionFactory;
-	 Session session ;
-	 Transaction tx ;
-	
-
-	public LicenseDao()
-	{	
-		Configuration cfg = new Configuration();  
-        cfg.configure();          
-        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();           
-        SessionFactory sessionFactory = cfg.buildSessionFactory(sr);  
-                  
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-	
-	}
-	
-	private  void close()
-	{
-		tx.commit();
-		session.close();
-		//sessionFactory.close();
-	}
-	public void commit(){
-		tx.commit();
-		session.close();
-	}
-
 }
