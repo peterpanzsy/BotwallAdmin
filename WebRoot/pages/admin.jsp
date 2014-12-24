@@ -147,13 +147,15 @@ else{
 				  <li style="width:200px;"><a href="#side-tab6">网络配置</a></li>
 				  <li style="width:200px;"><a href="#side-tab7">白名单配置</a></li>
 				  <li style="width:200px;"><a href="#side-tab2">蜜罐主机配置</a></li>
+				 <!--  <li style="width:200px;"><a href="#side-tab0">控制主机配置</a></li> -->
 				  <li style="width:200px;"><a href="#side-tab3">数据库配置</a></li>
 				  <li style="width:200px;"><a href="#side-tab1">License配置</a></li>
+				  <li style="width:200px;"><a href="#side-tab4">FTP服务器配置</a></li>
 				  <li style="width:200px;"><a href="#side-tab9">BotWall功能管理</a></li>
-				 <!--  <li style="width:200px;"><a href="#side-tab4">FTP服务器配置</a></li>
-				  <li style="width:200px;"><a href="#side-tab5">协同行为分析参数配置</a></li> -->
+				  
+				  <!--<li style="width:200px;"><a href="#side-tab5">协同行为分析参数配置</a></li> -->
 				 </ul>
-				    <div style="position:absolute;top:500px;">
+				    <div style="position:absolute;top:600px;">
 					   <div class="span3" style="width:200px;margin-left:5px;" >
 				          <a href=" javascript:void(0)" onclick="reloadAllConfig();" class="btn btn-large btn-block btn-primary">配置生效</a>
 				        </div>
@@ -304,6 +306,13 @@ else{
 		      		</div>	      		
 					
 				  </div>
+		<!-- 		  <div id="side-tab0" style="margin-left:120px;">
+					<h2>控制主机管理</h2>
+					<table id="ControlIPList" class="table table-striped table-bordered table-hover datatable " ></table>
+		      		<div style="border:3px dashed #336699;box-shadow:2px 2px 10px #333300;border-radius: 11px;width:800" >
+		      			<div id="ControlIPPager" ></div>
+		      		</div>	      						
+				  </div> -->
 				  <div id="side-tab3" style="margin-left:100px;">
 				   <h2>数据库配置</h2>
 				   <form id="updateDBForm" action="updateDB.action" method="post"> 
@@ -349,7 +358,7 @@ else{
 				  	<%@ include file="function.jsp" %>
 				  	
 				  </div>
-			<!-- 	  <div id="side-tab4" style="margin-left:120px;">
+			 	  <div id="side-tab4" style="margin-left:120px;">
 				   <h2>FTP服务器配置</h2>
 				   <form id="updateFTPForm" action="updateFTP.action" method="post"> 
 		     	 	<table cellpadding="0" cellspacing="0" class="gridtable">
@@ -383,8 +392,8 @@ else{
 					   <div class="modal-footer">
 					        <button type="submit" class="btn btn-primary"  >保存</button>
 					   </div>
-				   </form> 
-				  </div> -->
+				   </form>
+				  </div> 
 				  
 			<!-- 	  <div id="side-tab5" style="margin-left:120px;">
 				   <h2>协同行为分析参数配置</h2 >
