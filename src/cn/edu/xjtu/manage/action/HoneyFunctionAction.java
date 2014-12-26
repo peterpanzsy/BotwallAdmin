@@ -1,7 +1,7 @@
 package cn.edu.xjtu.manage.action;
 
-import cn.edu.xjtu.manage.business.HoneyFunctionService;
-import cn.edu.xjtu.manage.business.LowestMBService;
+
+import cn.edu.xjtu.manage.service.HoneyFunctionService;
 import cn.edu.xjtu.tools.String2IntergerCheck;
 
 import com.opensymphony.xwork2.ActionContext;

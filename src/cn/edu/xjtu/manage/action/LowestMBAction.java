@@ -3,7 +3,7 @@ package cn.edu.xjtu.manage.action;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.edu.xjtu.manage.business.LowestMBService;
+import cn.edu.xjtu.manage.service.LowestMBService;
 import cn.edu.xjtu.tools.String2IntergerCheck;
 
 import com.opensymphony.xwork2.Action;
