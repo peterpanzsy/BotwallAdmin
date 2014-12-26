@@ -62,6 +62,7 @@ public class RegisterAction extends ActionSupport
 //				System.out.println("save()");
 //				userDAO.save(user);
 				userDAO.addUser(username, regpassword);
+				userDAO.close();
 				ActionContext.getContext().getSession().put("user", user);
 				login = true;
 				success = true;

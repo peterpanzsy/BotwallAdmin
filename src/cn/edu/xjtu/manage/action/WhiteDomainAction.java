@@ -140,7 +140,7 @@ public class WhiteDomainAction  extends ActionSupport{
 		WhiteDomainDao dao=new WhiteDomainDao();
 		
 		int result=dao.addWhiteDomain(domain,remark);
-
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -151,7 +151,7 @@ public class WhiteDomainAction  extends ActionSupport{
 				dao.deleteWhiteDomain(id);
 			}
 		}
-		dao.commit();
+		dao.close();
 		return "SUCCESS";
 	}
 

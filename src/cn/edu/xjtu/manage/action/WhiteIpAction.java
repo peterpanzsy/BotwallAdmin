@@ -151,7 +151,7 @@ public class WhiteIpAction  extends ActionSupport{
 		WhiteIpDao dao=new WhiteIpDao();
 		
 		int result=dao.addWhiteIp(ip,remark,ifrunning);
-
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -162,7 +162,7 @@ public class WhiteIpAction  extends ActionSupport{
 				dao.deleteWhiteIp(id);
 			}
 		}
-		dao.commit();
+		dao.close();
 		return "SUCCESS";
 	}
 	

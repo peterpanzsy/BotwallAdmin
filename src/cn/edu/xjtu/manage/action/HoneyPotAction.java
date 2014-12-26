@@ -132,9 +132,8 @@ public class HoneyPotAction  extends ActionSupport{
 	public String add(){
 
 		HoneyPotDao dao=new HoneyPotDao();
-		
 		int result=dao.addPot(ip);
-
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -146,7 +145,7 @@ public class HoneyPotAction  extends ActionSupport{
 				dao.deletePot(id);
 			}
 		}
-		dao.commit();
+		dao.close();
 		return "SUCCESS";
 	}
 	

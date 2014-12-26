@@ -601,7 +601,7 @@ else{
 		        <h4 class="modal-title" style="font-weight:bold;font-family:幼圆">添加用户</h4>
 		      </div>
 		      <div class="modal-body">
-		     	 <form id="registerForm" action="register.action" method="post" style="margin-top:-10px;"> 
+		     	 <form id="registerForm"  method="post" style="margin-top:-10px;"> 
 		     	 	<table width="100%" cellpadding="0" cellspacing="0" class="post_table" >
 		      		
 		      			<tr>
@@ -652,34 +652,77 @@ else{
 		$(document).ready(function(){
 		    $('#add_whitedomain_modal').on('hide.bs.modal', function () {
 		       $(this).removeData("bs.modal");
-		       // $("#add_whitedomain_modal").removeData("bs.modal");
-		        //$("#whitedomain").removeData();
-		       // $(this).empty();
-		    })
-		});
-		$("footer").css({
-			"margin-top":200
-		});
-		$(".gridtable td:first-child").css({
-			'background-color':'#F5FFFA',			
+		    });
+			$("footer").css({
+				"margin-top":200
+			});
+			$(".gridtable td:first-child").css({
+				'background-color':'#F5FFFA',			
+			});
+		
+			$('.modal-dialog').css({
+				
+				 'margin-top': function () {
+				            return ($(window).height()-700)/2;
+				        },
+				 'margin-right':function () {
+				            return ($(window).width()-300 );
+				        },
+			});
+			
+			$('#tab-side-container').easytabs({
+			  animate: false,
+			  tabActiveClass: "selected-tab",
+			  panelActiveClass: "displayed"
+			});
+			
+			/*注册用户
+			*/
+			$("#conpassword").blur(function() {
+		       var reg_password = $("#reg_password").val();
+		       if (reg_password != $("#conpassword").val()) {
+		           alert("确认密码与密码不一致.");
+		           return;
+		       } else {
+		           //$(this).next("span").html(img_rigth);
+		       }
+	   	 	});
+	   	 	
+			$("#registerForm").validate({
+				debug:true,
+				onsubmit:true,
+				onfocusout:false,
+				onkeyup:true,
+				rules:{
+					username:{
+						required:true
+					},
+					reg_password:{
+						required:true
+					},
+					conpassword:{
+						required:true
+					}	
+				},
+				messages:{
+					username:{
+						required:"用户名不能为空！",
+					},
+					reg_password:{
+						required:"密码不能为空！"
+					},
+					conpassword:{
+						required:"请输入确认密码！"
+					}
+				},
+				submitHandler:function(){
+					
+					register();
+				}
+			});
+	
 		});
 	
-		$('.modal-dialog').css({
-			
-			 'margin-top': function () {
-			            return ($(window).height()-700)/2;
-			        },
-			 'margin-right':function () {
-			            return ($(window).width()-300 );
-			        },
-		});
-		
-		$('#tab-side-container').easytabs({
-		  animate: false,
-		  tabActiveClass: "selected-tab",
-		  panelActiveClass: "displayed"
-		});
-		
 		function logout(){
 			if (window.confirm("您真的确定要退出吗? 请确认！")) {
 				$.ajax({
@@ -835,50 +878,7 @@ else{
 			});
 		
 		}
-		/*注册用户
-		*/
-		$("#conpassword").blur(function() {
-	       var reg_password = $("#reg_password").val();
-	       if (reg_password != $("#conpassword").val()) {
-	           alert("确认密码与密码不一致.");
-	           return;
-	       } else {
-	           //$(this).next("span").html(img_rigth);
-	       }
-   	 	});
-   	 	
-		$("#registerForm").validate({
-			debug:true,
-			onsubmit:true,
-			onfocusout:false,
-			onkeyup:true,
-			rules:{
-				username:{
-					required:true
-				},
-				reg_password:{
-					required:true
-				},
-				conpassword:{
-					required:true
-				}	
-			},
-			messages:{
-				username:{
-					required:"用户名不能为空！",
-				},
-				reg_password:{
-					required:"密码不能为空！"
-				},
-				conpassword:{
-					required:"请输入确认密码！"
-				}
-			},
-			submitHandler:function(){
-				
-				register();
-			}
-		});
+		
 			
 	function register(){
 		//confirmPassword();
@@ -919,8 +919,7 @@ else{
        }
 	}
 		
-
-	</script>
+</script>
 	
 </html>
 

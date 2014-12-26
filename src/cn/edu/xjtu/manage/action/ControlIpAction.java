@@ -141,10 +141,9 @@ public class ControlIpAction  extends ActionSupport{
 	
 	public String add(){
 
-		ControlIpDao dao=new ControlIpDao();
-		
+		ControlIpDao dao=new ControlIpDao();		
 		int result=dao.addControlIp(ip,remark);
-
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -155,7 +154,7 @@ public class ControlIpAction  extends ActionSupport{
 				dao.deleteControlIp(id);
 			}
 		}
-		dao.commit();
+		dao.close();
 		return "SUCCESS";
 	}
 	

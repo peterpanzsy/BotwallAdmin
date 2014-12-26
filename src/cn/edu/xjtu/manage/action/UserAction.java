@@ -66,6 +66,7 @@ public class UserAction extends ActionSupport{
 	public String update(){
 		UserDao dao=new UserDao();
 		dao.updateUser(username, password);
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -77,7 +78,7 @@ public class UserAction extends ActionSupport{
 				dao.deleteUser(id);
 			}
 		}
-		dao.commit();
+		dao.close();
 		return "SUCCESS";
 	}
 	
