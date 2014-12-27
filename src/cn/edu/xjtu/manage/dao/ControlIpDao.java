@@ -37,7 +37,7 @@ public class ControlIpDao {
 	
 	}	
 	public List<ControlIp> getControlIpList() {
-		SQLQuery q = session.createSQLQuery("SELECT t.id,t.ip,t.remark FROM t_controlip t");
+		SQLQuery q = session.createSQLQuery("SELECT t.id,t.ip,t.remark FROM t_adminip t");
 		List l = q.list();
 		List<ControlIp> re=new ArrayList<ControlIp>();
 		for(int i=0;i<l.size();i++)
@@ -55,7 +55,7 @@ public class ControlIpDao {
 	
 	public int getCountControlIp(){
 
-		String sql="select count(*) from t_controlip t ";
+		String sql="select count(*) from t_adminip t ";
 		SQLQuery q = session.createSQLQuery(sql);
 		Integer count=((BigInteger)q.uniqueResult()).intValue();
 		return count;
@@ -63,7 +63,7 @@ public class ControlIpDao {
 	
 	public int addControlIp(String ip,String remark){
 		HibernateSessionManager.getThreadLocalTransaction();
-		Query q = session.createSQLQuery("insert into t_controlip (ip,remark) values (?,?)");
+		Query q = session.createSQLQuery("insert into t_adminip (ip,remark) values (?,?)");
 		q.setParameter(0, ip);
 		q.setParameter(1, remark);
 		int result=q.executeUpdate();
@@ -72,7 +72,7 @@ public class ControlIpDao {
 	
 	public int deleteControlIp(int id) {
 		HibernateSessionManager.getThreadLocalTransaction();
-		SQLQuery q = session.createSQLQuery("delete from t_controlip where ID=?");
+		SQLQuery q = session.createSQLQuery("delete from t_adminip where ID=?");
 		q.setParameter(0, id);
 		int re=q.executeUpdate();
 		return re;
