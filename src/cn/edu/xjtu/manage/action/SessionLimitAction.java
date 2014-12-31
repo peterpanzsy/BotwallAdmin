@@ -89,13 +89,13 @@ public class SessionLimitAction extends ActionSupport {
 */
 	public String unlimited(){
 		try {
-			//Runtime.getRuntime().exec("/limit stop ");
+			Runtime.getRuntime().exec("/botwall/script/limit stop ");
 			result="success";
 			ActionContext.getContext().getApplication().put("isSessionLimitedStart", false);
-			ActionContext.getContext().getApplication().put("IPNum","还木有限制");
-			ActionContext.getContext().getApplication().put("TCPNum","还木有限制");
-			ActionContext.getContext().getApplication().put("ICMPRateNum","还木有限制");
-			ActionContext.getContext().getApplication().put("TCPRateNum","还木有限制");
+			ActionContext.getContext().getApplication().put("IPNum","");
+			ActionContext.getContext().getApplication().put("TCPNum","");
+			ActionContext.getContext().getApplication().put("ICMPRateNum","");
+			ActionContext.getContext().getApplication().put("TCPRateNum","");
 		} catch (Exception e) {
 			e.printStackTrace();
 			result="failure";

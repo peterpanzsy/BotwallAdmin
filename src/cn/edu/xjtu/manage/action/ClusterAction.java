@@ -67,6 +67,7 @@ public class ClusterAction  extends ActionSupport{
 	public String update(){
 		ClusterDao dao=new ClusterDao();
 		int re=dao.updateParameter(id, interval);
+		dao.close();
 		return "SUCCESS"; 
 	}
 	public String getCluster(){
@@ -75,6 +76,7 @@ public class ClusterAction  extends ActionSupport{
 		if(!dataList.isEmpty()){
 			clusterParameter= dataList.get(0);
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 	

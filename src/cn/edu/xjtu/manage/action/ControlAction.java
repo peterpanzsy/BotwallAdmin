@@ -118,7 +118,7 @@ public class ControlAction  extends ActionSupport{
 			String TCPRateNum = (String) ActionContext.getContext().getApplication().get("TCPRateNum");
 			//wangdi注释
 			//ActionContext.getContext().getApplication().put("TCPRateNum","");
-			Runtime.getRuntime().exec("/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
+			Runtime.getRuntime().exec("/botwall/script/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isLowestMBStart")){
 			String temp = (String)ActionContext.getContext().getApplication().get("globalLowestMB");

@@ -136,6 +136,7 @@ public class ControlIpAction  extends ActionSupport{
 				total++;
 			}
 		}
+		dao.close();
 		return "SUCCESS";
 	}
 	

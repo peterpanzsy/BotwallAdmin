@@ -73,7 +73,7 @@
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<a class="accordion-toggle" data-toggle="collapse"
-				data-parent="#accordion-684299" href="#accordion-element-3">IP并发会话数</a>
+				data-parent="#accordion-684299" href="#accordion-element-3">会话限制</a>
 		</div>
 		<div id="accordion-element-3" class="accordion-body collapse">
 			<div class="span4 accordion-inner todo mrm"
@@ -92,7 +92,7 @@
 					<div class="span3"
 						style="width:300px;margin-top:10px;margin-left:5px;">
 						<a onclick="session(this.id)" id="session_start1"
-							class="btn btn-large btn-block btn-primary">启动限制会话数，使用默认网口eth0</a>
+							class="btn btn-large btn-block btn-primary">启动限制会话数，使用默认网口eth1</a>
 					</div>
 					<!-- 
         		<div class="span3" style="width:300px;margin-top:10px;margin-left:5px;">

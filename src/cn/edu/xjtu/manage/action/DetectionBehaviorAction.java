@@ -43,7 +43,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	//检测恶意行为
 	public String attackEvent(){
 		try {
-			Runtime.getRuntime().exec("java -jar /botwall/java/AttackEvent.jar" );
+			Runtime.getRuntime().exec("cd /botwall/java/;java -jar AttackEvent.jar" );
 			ActionContext.getContext().getApplication().put("isAttackEventStart",true);
 			result="success";
 			msg="配置成功";

@@ -367,7 +367,7 @@ public class DBAction  extends ActionSupport{
 		DBDao dao=new DBDao();
 		int re=dao.updateDB(id, ip, dbport,dbname, dbuser,dbpasswd);
 		write(dbconfpath,modifyDBconf(dbconfpath)); // 读取修改文件
-			
+		dao.close();	
 		return "SUCCESS"; 
 	}
 	public String getDB(){
@@ -376,6 +376,7 @@ public class DBAction  extends ActionSupport{
 		if(!dataList.isEmpty()){
 			dbinfo= dataList.get(0);
 		}	
+		dao.close();
 		return "SUCCESS";
 	}
 	
@@ -399,7 +400,13 @@ public class DBAction  extends ActionSupport{
 		int res=dao.updateNetConf(id, netip, maskip,gateip,dns1ip,dns2ip);	
 		dao.close();
 		//String content=new StringBuilder("#! /bin/sh\r\nifconfig eth0 ").append(netip).append(" netmask ").append(maskip).append("\r\n").append("route add default gw ").append(gateip).append("\r\n").append("echo \"").append("nameserver ").append(dns1ip).append("\\n").append("nameserver ").append(dns2ip).append("\" >/etc/resolv.conf\r\n").append("/etc/init.d/networking restart").toString();
-		String content=new StringBuilder("auto lo\niface lo inet loopback\nauto eth2\niface eth2 inet static\naddress ").append(netip).append("\nnetmask ").append(maskip).append("\nnetwork ").append(networkip).append("\nbroadcast ").append(broadcastip).append("\ngateway ").append(gateip).append("\n\nauto eth2:0\niface eth2:0 inet static\naddress 192.168.2.252\nnetmask 255.255.255.0\nnetwork 192.168.2.0\nbroadcast 192.168.2.255").toString();
+		String content=new StringBuilder("auto lo\niface lo inet loopback\nauto eth2\niface " +
+				"eth2 inet static\naddress ").append(netip).
+				append("\nnetmask ").append(maskip).append("\nnetwork ").
+				append(networkip).append("\nbroadcast ").append(broadcastip).
+				append("\ngateway ").append(gateip).
+				append("\n\nauto eth2:0\niface eth2:0 inet static\naddress " +
+						"192.168.2.252\nnetmask 255.255.255.0\nnetwork 192.168.2.0\nbroadcast 192.168.2.255").toString();
 				
 		write(interfacePath,content); // 读取修改文件
 		

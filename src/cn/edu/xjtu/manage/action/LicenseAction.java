@@ -86,6 +86,7 @@ public class LicenseAction  extends ActionSupport{
 	public String update(){
 		LicenseDao dao=new LicenseDao();
 		int res=dao.updateLicense(id, licensestr,expires,isvalid);
+		dao.close();
 /*		try {
 			int issuccess=JavaShellUtil.executeShell("/botwall/script/checkLicense.sh");
 			if(issuccess==1){
