@@ -29,7 +29,7 @@ public class Pacp_captureAction extends ActionSupport {
 	
 	public String start() {
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/pacp_capture start" );
+			Runtime.getRuntime().exec("/botwall/script/pacp_capture start" );
 			ActionContext.getContext().getApplication().put("isPacp_captureStart", true);
 			result="success";
 			msg ="开始截获流量成功";
@@ -57,7 +57,7 @@ public class Pacp_captureAction extends ActionSupport {
 	
 	public String restart() {
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/pacp_capture restart");
+			Runtime.getRuntime().exec("/botwall/script/pacp_capture restart");
 			result="success";
 			ActionContext.getContext().getApplication().put("isPacp_captureStart", true);
 			msg ="重新开始截获流量成功";
@@ -71,7 +71,7 @@ public class Pacp_captureAction extends ActionSupport {
 	
 	public String stop() {
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/pacp_capture stop" );
+			Runtime.getRuntime().exec("/botwall/script/pacp_capture stop" );
 			result="success";
 			ActionContext.getContext().getApplication().put("isPacp_captureStart", false);
 			msg ="停止截获流量成功";

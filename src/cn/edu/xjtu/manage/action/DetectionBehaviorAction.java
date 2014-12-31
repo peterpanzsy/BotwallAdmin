@@ -29,7 +29,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	//检验证书的合法性
 	public String checkLicence(){
 		try {
-			//Runtime.getRuntime().exec("java -jar /botwall/java/checkLicence.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/checkLicence.jar" );
 			ActionContext.getContext().getApplication().put("isCheckLicenceStart",true);
 			result="success";
 			msg="配置成功";
@@ -43,7 +43,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	//检测恶意行为
 	public String attackEvent(){
 		try {
-			//Runtime.getRuntime().exec("java -jar /botwall/java/AttackEvent.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/AttackEvent.jar" );
 			ActionContext.getContext().getApplication().put("isAttackEventStart",true);
 			result="success";
 			msg="配置成功";
@@ -57,7 +57,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	//检测IRC僵尸网络
 	public String findBotnet(){
 		try {
-			//Runtime.getRuntime().exec("java -jar /botwall/java/findBotnet.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/findBotnet.jar" );
 			ActionContext.getContext().getApplication().put("isFindBotnetStart",true);
 			result="success";
 			msg="配置成功";
@@ -71,7 +71,7 @@ public class DetectionBehaviorAction extends ActionSupport {
 	//检测协同僵尸网络
 	public String detectionCobehave(){
 		try {
-			//Runtime.getRuntime().exec("java -jar /botwall/java/DetectionCobehave.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/DetectionCobehave.jar" );
 			ActionContext.getContext().getApplication().put("isDetectionCobehaveStart",true);
 			result="success";
 			msg="配置成功";

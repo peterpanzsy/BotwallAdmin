@@ -53,7 +53,7 @@ public class SessionLimitAction extends ActionSupport {
 				String2IntergerCheck.check(ICMPRateNum)&&String2IntergerCheck.check(TCPRateNum);
 		if(flag){
 			try {
-				//Runtime.getRuntime().exec("/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
+				Runtime.getRuntime().exec("/botwall/script/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
 				ActionContext.getContext().getApplication().put("TCPNum", TCPNum);
 				ActionContext.getContext().getApplication().put("IPNum", IPNum);
 				ActionContext.getContext().getApplication().put("ICMPRateNum", ICMPRateNum);

@@ -37,8 +37,8 @@ public class RateLimitationAction extends ActionSupport {
 		boolean flag = String2IntergerCheck.check(uploadRate)&&String2IntergerCheck.check(downloadRate);
 		if(flag){
 			try {
-				//Runtime.getRuntime().exec(new StringBuffer("/botwall/script/wshaper ")
-					//					.append(uploadRate).append(" ").append(downloadRate).append(" ").toString());
+				Runtime.getRuntime().exec(new StringBuffer("/botwall/script/wshaper ")
+										.append(uploadRate).append(" ").append(downloadRate).append(" ").toString());
 				result="success";
 				ActionContext.getContext().getApplication().put("isRateLimitedStart", true);
 				ActionContext.getContext().getApplication().put("globalUploadRate", uploadRate);
@@ -54,7 +54,7 @@ public class RateLimitationAction extends ActionSupport {
 	}
 	public String rateStop(){
 		try {
-			//Runtime.getRuntime().exec("/botwall/script/wshaper stop");
+			Runtime.getRuntime().exec("/botwall/script/wshaper stop");
 			result="success";
 			ActionContext.getContext().getApplication().put("isRateLimitedStart", false);
 			ActionContext.getContext().getApplication().put("globalUploadRate", "还木有限制");

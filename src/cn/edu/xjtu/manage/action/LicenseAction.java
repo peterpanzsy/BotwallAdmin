@@ -21,6 +21,7 @@ public class LicenseAction  extends ActionSupport{
 	int isvalid;
 	License license;
 	List<License> dataList;
+	//wangdi
 	private String callJava="/control/script/checkLicense.sh";
 	private int id;
 	
@@ -100,6 +101,7 @@ public class LicenseAction  extends ActionSupport{
 		}*/
 		try {
 //			Process pid = Runtime.getRuntime().exec("/bin/sh /botwall/script/checkLicense.sh");
+			//wangdi
 			Runtime.getRuntime().exec("sh /botwall/script/checkLicense.sh");
 			//重启服务 
 			systemRestart();
@@ -113,8 +115,8 @@ public class LicenseAction  extends ActionSupport{
 	
 	//用于重新启动原有的服务
 	private void systemRestart() throws IOException {
-		//停止所有的服务
-		Runtime.getRuntime().exec("/stopAll");
+		//停止所有的服务 
+		 Runtime.getRuntime().exec("/botwall/script/stopAll");
 		//重新开启
 		if((Boolean)ActionContext.getContext().getApplication().get("isHoneyFuntionStart")){
 			String email = (String)ActionContext.getContext().getApplication().get("globalEmail");
@@ -133,7 +135,7 @@ public class LicenseAction  extends ActionSupport{
 			String TCPNum = (String) ActionContext.getContext().getApplication().get("TCPNum");
 			String ICMPRateNum = (String) ActionContext.getContext().getApplication().get("ICMPRateNum");
 			String TCPRateNum = (String) ActionContext.getContext().getApplication().get("TCPRateNum");
-			ActionContext.getContext().getApplication().put("TCPRateNum","还木有限制");
+			ActionContext.getContext().getApplication().put("TCPRateNum","");
 			Runtime.getRuntime().exec("/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isLowestMBStart")){
