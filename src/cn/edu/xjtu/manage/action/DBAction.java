@@ -382,6 +382,7 @@ public class DBAction  extends ActionSupport{
 	public String updateFTP(){
 		DBDao dao=new DBDao();
 		int re=dao.updateFTP(id, ftpip, ftpport, ftpuser,ftppasswd);
+		dao.close();
 		return "SUCCESS"; 
 	}
 	public String getFTP(){
@@ -396,7 +397,7 @@ public class DBAction  extends ActionSupport{
 	public String updateNetConf(){
 		DBDao dao=new DBDao();
 		int res=dao.updateNetConf(id, netip, maskip,gateip,dns1ip,dns2ip);	
-		
+		dao.close();
 		//String content=new StringBuilder("#! /bin/sh\r\nifconfig eth0 ").append(netip).append(" netmask ").append(maskip).append("\r\n").append("route add default gw ").append(gateip).append("\r\n").append("echo \"").append("nameserver ").append(dns1ip).append("\\n").append("nameserver ").append(dns2ip).append("\" >/etc/resolv.conf\r\n").append("/etc/init.d/networking restart").toString();
 		String content=new StringBuilder("auto lo\niface lo inet loopback\nauto eth2\niface eth2 inet static\naddress ").append(netip).append("\nnetmask ").append(maskip).append("\nnetwork ").append(networkip).append("\nbroadcast ").append(broadcastip).append("\ngateway ").append(gateip).append("\n\nauto eth2:0\niface eth2:0 inet static\naddress 192.168.2.252\nnetmask 255.255.255.0\nnetwork 192.168.2.0\nbroadcast 192.168.2.255").toString();
 				
@@ -406,7 +407,6 @@ public class DBAction  extends ActionSupport{
 		
 		write(resolvPath,dnscontent); // 读取修改文件
 		try {
-//			JavaShellUtil.executeShell("/etc/init.d/networking restart");
 			Process pid= Runtime.getRuntime().exec("/etc/init.d/networking restart");
 			re="success";
 		} catch (IOException e) {
@@ -414,23 +414,6 @@ public class DBAction  extends ActionSupport{
 			re="failure";
 			e.printStackTrace();
 		}
-	/*	try {
-			String[] cmd1={"ifconfig eth0 ",netip,"netmask ",maskip};
-			Process pid1=null; 
-			pid1= Runtime.getRuntime().exec(cmd1);
-			String[] cmd2={"route add default gw ",gateip};
-			Process pid2=null; 
-			pid2= Runtime.getRuntime().exec(cmd2);
-			String dnscmd=new StringBuilder("echo \"").append("nameserver ").append(dns1ip).append("\n").append("nameserver ").append(dns2ip).append("\" >/etc/resolv.conf").toString();			
-			Process pid3=null; 
-			pid2= Runtime.getRuntime().exec(dnscmd);
-			String[] restartcmd={"/etc/init.d/network restart"};
-			Process pid4=null; 
-			pid4= Runtime.getRuntime().exec(restartcmd);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		return "SUCCESS"; 
 	}
 	public String getNetConf(){
