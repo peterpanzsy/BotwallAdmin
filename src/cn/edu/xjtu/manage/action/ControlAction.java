@@ -139,7 +139,7 @@ public class ControlAction  extends ActionSupport{
 			Runtime.getRuntime().exec("java -jar /botwall/java/findBotnet.jar" );
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isCheckLicenceStart")){
-			Runtime.getRuntime().exec("java -jar /botwall/java/checkLisence.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/checkLicense.jar" );
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isDetectionCobehaveStart")){
 			Runtime.getRuntime().exec("java -jar /botwall/java/DetectionCobehave.jar" );
