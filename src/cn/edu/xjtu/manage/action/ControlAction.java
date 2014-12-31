@@ -116,7 +116,8 @@ public class ControlAction  extends ActionSupport{
 			String TCPNum = (String) ActionContext.getContext().getApplication().get("TCPNum");
 			String ICMPRateNum = (String) ActionContext.getContext().getApplication().get("ICMPRateNum");
 			String TCPRateNum = (String) ActionContext.getContext().getApplication().get("TCPRateNum");
-			ActionContext.getContext().getApplication().put("TCPRateNum","");
+			//wangdi注释
+			//ActionContext.getContext().getApplication().put("TCPRateNum","");
 			Runtime.getRuntime().exec("/limit start eth0 "+IPNum+" "+TCPNum+" "+ICMPRateNum+" "+TCPRateNum);
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isLowestMBStart")){
@@ -138,7 +139,7 @@ public class ControlAction  extends ActionSupport{
 			Runtime.getRuntime().exec("java -jar /botwall/java/findBotnet.jar" );
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isCheckLicenceStart")){
-			Runtime.getRuntime().exec("java -jar /botwall/java/checkLicence.jar" );
+			Runtime.getRuntime().exec("java -jar /botwall/java/checkLisence.jar" );
 		}
 		if((Boolean)ActionContext.getContext().getApplication().get("isDetectionCobehaveStart")){
 			Runtime.getRuntime().exec("java -jar /botwall/java/DetectionCobehave.jar" );
